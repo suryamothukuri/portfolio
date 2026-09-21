@@ -278,6 +278,10 @@
 
 @media (max-width: 860px) {
   .tl__card { grid-template-columns: 1fr; gap: 22px; }
+  /* The two columns stack here, which puts .tl__main hard against the spine
+     at left 0. The meta rail already clears it with padding-left: 28px, so
+     the body takes the same offset and the whole card lines up on one edge. */
+  .tl__main { padding-left: 28px; }
   .tl__logo { height: 42px; }
   .tl__logo--ford { height: 30px; }
   .tl__logo--tcs  { height: 27px; }

@@ -968,6 +968,10 @@ section {
 
 @media (max-width: 860px) {
   .tl__card { grid-template-columns: 1fr; gap: 22px; }
+  /* The two columns stack here, which puts .tl__main hard against the spine
+     at left 0. The meta rail already clears it with padding-left: 28px, so
+     the body takes the same offset and the whole card lines up on one edge. */
+  .tl__main { padding-left: 28px; }
   .tl__logo { height: 42px; }
   .tl__logo--ford { height: 30px; }
   .tl__logo--tcs  { height: 27px; }
@@ -1545,7 +1549,12 @@ section {
 
   .ars { grid-template-columns: 1fr; }
 
-  .prj { min-height: 0; }
+  /* .prj is a flex row, and below this width .prj__n leaves its absolute
+     position and becomes a third item in that row. The number, the copy and
+     the diagram then split the width three ways: at 430px that left the body
+     140px wide, which is why it read as centred, and pushed the diagram to
+     526px, off the right edge. Stacking them is the fix. */
+  .prj { display: block; min-height: 0; }
   .prj__n { position: static; transform: none !important; display: block; margin-bottom: -0.1em; }
 }
 
