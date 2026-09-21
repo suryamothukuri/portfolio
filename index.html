@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Surya Teja Mothukuri, AI Engineer &amp; Data Scientist</title>
+<meta name="description" content="Surya Teja Mothukuri builds AI systems that earn their place in production. Agentic GenAI, production ML, and the data engineering underneath. New York City.">
+<link rel="canonical" href="https://suryamothukuri.com/">
+<meta name="theme-color" content="#07080B" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#EFEDE7" media="(prefers-color-scheme: light)">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Surya Teja Mothukuri, AI Engineer &amp; Data Scientist">
+<meta property="og:description" content="Agentic GenAI, production ML, and the data engineering underneath. 90K+ clinical encounters. 10M+ records processed. 200 staff hours a month automated away.">
+<meta property="og:url" content="https://suryamothukuri.com/">
+<meta property="og:image" content="https://suryamothukuri.com/assets/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Surya Teja Mothukuri, AI Engineer &amp; Data Scientist">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Surya Teja Mothukuri, AI Engineer &amp; Data Scientist">
+<meta name="twitter:description" content="I build AI systems that earn their place in production.">
+<meta name="twitter:image" content="https://suryamothukuri.com/assets/og-card.jpg">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+<script>
+/* no-flash theme: must run before first paint */
+(function(){
+  var t = 'dark';
+  try {
+    var s = localStorage.getItem('stm-theme');
+    if (s === 'light' || s === 'dark') t = s;
+    else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) t = 'light';
+  } catch(e){}
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Surya Teja Mothukuri",
+  "jobTitle": "AI Engineer & Data Scientist",
+  "email": "mailto:suryamothuk23@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "New York City",
+    "addressRegion": "NY",
+    "addressCountry": "US"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/in/surya-mothukuri/",
+    "https://github.com/suryamothukuri"
+  ],
+  "alumniOf": [
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "Indiana University Bloomington"
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "Indian Institute of Information Technology, Design & Manufacturing, Chennai"
+    }
+  ],
+  "knowsAbout": [
+    "Machine Learning",
+    "Generative AI",
+    "Retrieval-Augmented Generation",
+    "Data Engineering",
+    "MLOps",
+    "Computer Vision"
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ============ FILM LAYER ============ -->
+<div class="film" id="film" aria-hidden="true">
+  <canvas id="filmCanvas" class="film__canvas"></canvas>
+  <div class="film__veil" id="filmVeil"></div>
+</div>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<!-- ============ CURSOR ============ -->
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<!-- ============ GATE (intro puzzle + fact) ============ -->
+<div class="gate" id="gate">
+  <div class="gate__bg" aria-hidden="true"></div>
+
+  <header class="gate__id">
+    <span class="gate__name">Surya Teja Mothukuri</span>
+    <span class="gate__title">AI Engineer &amp; Data Scientist</span>
+  </header>
+
+  <div class="gate__inner">
+    <p class="gate__eyebrow" id="gateStep">An agent loop with one step missing. Put it back to enter.</p>
+
+    <div class="gate__loop" id="gateLoop">
+      <svg class="gate__ring" viewBox="0 0 360 240" aria-hidden="true">
+        <defs>
+          <pattern id="gateGrid" width="15" height="15" patternUnits="userSpaceOnUse">
+            <circle class="gate__dot" cx="1" cy="1" r="0.85"/>
+          </pattern>
+        </defs>
+        <rect class="gate__board" x="40" y="4" width="280" height="232" fill="url(#gateGrid)"/>
+        <path class="gate__arc" id="gseg1" d="M180 26 H246 A44 44 0 0 1 290 70 V120"/>
+        <path class="gate__arc gate__arc--gap" id="gseg2" d="M290 120 V170 A44 44 0 0 1 246 214 H180"/>
+        <path class="gate__arc gate__arc--gap" id="gseg3" d="M180 214 H114 A44 44 0 0 1 70 170 V120"/>
+        <path class="gate__arc" id="gseg4" d="M70 120 V70 A44 44 0 0 1 114 26 H180"/>
+        <g class="gate__flow">
+          <path d="M-4 -4.6 L1.4 0 L-4 4.6" transform="translate(277 39) rotate(45)"/>
+          <path d="M-4 -4.6 L1.4 0 L-4 4.6" transform="translate(277 201) rotate(135)"/>
+          <path d="M-4 -4.6 L1.4 0 L-4 4.6" transform="translate(83 201) rotate(225)"/>
+          <path d="M-4 -4.6 L1.4 0 L-4 4.6" transform="translate(83 39) rotate(315)"/>
+        </g>
+      </svg>
+      <div class="gate__node gate__node--n1"><b>01</b>Observe</div>
+      <div class="gate__node gate__node--n2"><b>02</b>Reason</div>
+      <div class="gate__node gate__node--n4"><b>04</b>Learn</div>
+      <div class="gate__slot" id="gateSlot" aria-label="Drop the missing step here"><b>03</b><span class="gate__slotT">?</span></div>
+    </div>
+
+    <button class="gate__chip" id="gateChip" type="button"
+            aria-label="Act: drag into the gap, or press Enter"><b>03</b>Act</button>
+    <span class="gate__hint" id="gateHint">Drag it into the gap</span>
+
+    <div class="gate__fact" id="gateFact" hidden>
+      <span class="gate__factLabel">Did you know</span>
+      <p class="gate__factText" id="gateFactText"></p>
+      <span class="gate__enter">Click anywhere, or wait</span>
+      <div class="gate__count" aria-hidden="true"><span id="gateCount"></span></div>
+    </div>
+  </div>
+
+  <button class="gate__skip" id="gateSkip" type="button">Skip</button>
+  <div class="gate__load"><span id="gateLoad"></span></div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="hdr" id="hdr">
+  <a class="hdr__mark" href="#top">Surya Teja Mothukuri</a>
+  <nav class="hdr__nav" aria-label="Primary">
+    <a href="#experience"><i>01</i>Experience</a>
+    <a href="#work"><i>02</i>Projects</a>
+    <a href="#skills"><i>03</i>Skills</a>
+    <a href="#contact"><i>04</i>Contact</a>
+  </nav>
+  <div class="hdr__right">
+    <a class="hdr__ico" href="https://www.linkedin.com/in/surya-mothukuri/" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3.2 9h3.6v12H3.2zM10 9h3.45v1.64h.05c.48-.9 1.66-1.85 3.42-1.85 3.66 0 4.33 2.28 4.33 5.25V21h-3.6v-5.5c0-1.31-.02-3-1.9-3-1.9 0-2.19 1.42-2.19 2.9V21H10z"/></svg>
+    </a>
+    <a class="hdr__ico" href="https://github.com/suryamothukuri" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.9 3.17 9.06 7.57 10.53.55.1.75-.24.75-.53v-1.9c-3.08.67-3.73-1.48-3.73-1.48-.5-1.28-1.23-1.62-1.23-1.62-1-.69.08-.67.08-.67 1.11.08 1.7 1.14 1.7 1.14.99 1.7 2.6 1.21 3.23.92.1-.72.39-1.21.7-1.49-2.46-.28-5.05-1.23-5.05-5.48 0-1.21.43-2.2 1.14-2.98-.11-.28-.49-1.41.11-2.94 0 0 .93-.3 3.05 1.14a10.5 10.5 0 0 1 5.56 0c2.12-1.44 3.05-1.14 3.05-1.14.6 1.53.22 2.66.11 2.94.71.78 1.14 1.77 1.14 2.98 0 4.26-2.6 5.2-5.07 5.47.4.35.76 1.03.76 2.08v3.08c0 .29.2.64.76.53 4.4-1.47 7.56-5.63 7.56-10.53C23.1 5.33 18.27.5 12 .5z"/></svg>
+    </a>
+    <button class="toggle" id="themeToggle" type="button" aria-label="Switch to light theme" aria-pressed="false">
+      <svg class="toggle__sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><g><path d="M12 1.6v3M12 19.4v3M1.6 12h3M19.4 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M19.4 4.6l-2.1 2.1M6.7 17.3l-2.1 2.1"/></g></svg>
+      <svg class="toggle__moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"/></svg>
+    </button>
+    <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
+  </div>
+</header>
+
+<div class="menu" id="menu" aria-hidden="true">
+  <nav aria-label="Mobile">
+    <a href="#experience"><i>01</i>Experience</a>
+    <a href="#work"><i>02</i>Projects</a>
+    <a href="#skills"><i>03</i>Skills</a>
+    <a href="#credentials"><i>04</i>Credentials</a>
+    <a href="#contact"><i>05</i>Contact</a>
+  </nav>
+  <div class="menu__foot">
+    <a href="mailto:suryamothuk23@gmail.com">suryamothuk23@gmail.com</a>
+    <span>NEW YORK CITY, NY</span>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ============ 01 HERO ============ -->
+<section class="hero" id="top" data-film="hero" aria-labelledby="heroTitle">
+  <div class="hero__inner">
+    <figure class="portrait" id="portrait" aria-hidden="true">
+      <img src="assets/photo.jpg" alt="" decoding="async">
+    </figure>
+    <p class="eyebrow" data-hero="1">AI Engineer &amp; Data Scientist, New York City</p>
+    <h1 class="hero__name" id="heroTitle" data-split="word">Surya Teja Mothukuri</h1>
+    <p class="hero__tag" data-reveal="line">I build AI systems that <em>earn</em> their place in production.</p>
+    <p class="hero__sub" data-hero="2">Agentic GenAI, production ML, and the data engineering underneath. <br>90K+ clinical encounters. 10M+ records processed. 200 staff hours a month automated away.</p>
+    <div class="hero__act" data-hero="3">
+      <a class="btn" href="#experience">My career</a>
+      <a class="btn" href="#contact">Get in touch</a>
+    </div>
+  </div>
+  <div class="hero__meta" data-hero="4">
+    <span id="filmLabel">Latent Space / 01 · Compute</span>
+    <span>Scroll to advance</span>
+  </div>
+</section>
+
+<!-- ============ 02 MISSION ============ -->
+<section class="mission" id="mission" data-film="feature" aria-labelledby="missionTitle">
+  <span class="idx">01 / Mission</span>
+  <div class="mission__grid">
+    <div class="mission__inner">
+      <h2 class="mission__lead" id="missionTitle" data-reveal="line" data-kinetic>Every system I ship has to answer for itself.</h2>
+      <p class="mission__body" data-reveal="line">A risk score decides who gets seen first. A forecast decides what gets stocked. An agent decides what to do without asking. When software carries that kind of weight, “it performed well in validation” is not an answer, so I build the evaluation, the drift gates, the human-in-the-loop checks and the audit trail that let someone else verify my work.</p>
+      <p class="mission__kick" data-reveal="line"><em>Accuracy is a number.</em> Trust is the deliverable.</p>
+    </div>
+    <aside class="stats" aria-label="Key figures">
+      <div class="stats__track" id="statsTrack">
+        <div class="stat"><span class="stat__n" data-count="90" data-suffix="K+">0</span><span class="stat__l">Clinical encounters modeled</span></div>
+        <div class="stat"><span class="stat__n" data-count="10" data-suffix="M+">0</span><span class="stat__l">Transactional records processed</span></div>
+        <div class="stat"><span class="stat__n" data-count="200" data-suffix="/mo">0</span><span class="stat__l">Staff hours automated away</span></div>
+        <div class="stat"><span class="stat__n" data-count="4.2" data-dec="1" data-prefix="$" data-suffix="K/mo">0</span><span class="stat__l">Infrastructure spend cut</span></div>
+        <div class="stat"><span class="stat__n" data-count="50" data-suffix="%">0</span><span class="stat__l">Defect false negatives cut</span></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 03 EXPERIENCE ============ -->
+<section class="story" id="experience" data-film="margin" aria-labelledby="storyHeading">
+  <span class="idx">02 / Experience</span>
+  <h2 class="sec__t" id="storyHeading" data-reveal="line">Experience</h2>
+  <div class="tl" id="tl">
+    <div class="tl__track" id="tlTrack">
+      <div class="tl__spine" id="tlSpine" aria-hidden="true"><span></span></div>
+
+      <article class="tl__card">
+        <div class="tl__meta">
+          <div class="tl__inner">
+            <span class="tl__period">Jun 2026 - Present</span>
+            <h3 class="tl__role">Software Engineer - AI &amp; Data</h3>
+            <p class="tl__org">Heartland Community Network</p>
+            <img class="tl__logo" src="assets/logos/heartland.png" alt="Heartland Community Network" loading="lazy">
+          </div>
+        </div>
+        <div class="tl__main">
+          <div class="tl__b">
+            <p>At Heartland Community Network, I build the software behind AI solutions for clients across Indiana. My focus is turning AI prototypes into dependable production services. That means designing the service layer, deciding how systems should fail safely, and working closely with researchers and client stakeholders to get there.</p>
+            <p>I architected a distributed Python and FastAPI service layer for AI-assisted intake and triage, with MCP-controlled tool execution, asynchronous orchestration, idempotent retries, and PostgreSQL state management. This brought failed workflow executions down from 14 to 3 per month.</p>
+            <p>I delivered these services as containers on AWS EKS and Kubernetes, with Redis-backed coordination, GitLab CI/CD, and CloudWatch observability. This let the shared platform grow to 4 client workflows across 3 cross-functional delivery teams.</p>
+            <p>Along the way, I partnered with AI researchers and client stakeholders to turn RAG and agentic AI prototypes into production software. I defined service contracts, test suites, failure handling, code-review standards, and human-in-the-loop safeguards so the systems could be deployed reliably.</p>
+          </div>
+          <ul class="tl__tags"><li>Python</li><li>FastAPI</li><li>Distributed Systems</li><li>Model Context Protocol (MCP)</li><li>AWS EKS</li><li>Kubernetes</li><li>PostgreSQL</li><li>Redis</li><li>GitLab CI/CD</li><li>Amazon CloudWatch</li></ul>
+        </div>
+      </article>
+
+      <article class="tl__card">
+        <div class="tl__meta">
+          <div class="tl__inner">
+            <span class="tl__period">Oct 2024 - May 2026</span>
+            <h3 class="tl__role">Software Engineer - Data Operations</h3>
+            <p class="tl__org">Indiana University Bloomington</p>
+            <img class="tl__logo logo--color" src="assets/logos/iu.png" alt="Indiana University Bloomington" loading="lazy">
+          </div>
+        </div>
+        <div class="tl__main">
+          <div class="tl__b">
+            <p>At Indiana University Bloomington, I worked as a software engineer on the data services behind inventory and procurement applications for a university operations team. My work focused on making data processing faster, cheaper, and safer to change.</p>
+            <p>I scaled Python, SQL, and PySpark processing across more than 10M transactional records, raising sustained throughput from 1.2M to 3.4M rows per hour with partition-aware execution, parallel workloads, and better data-access patterns. I also restructured dbt transformations, consolidated Databricks workloads, and right-sized Snowflake compute around actual demand, which lowered analytics infrastructure spend by $4.2K per month.</p>
+            <p>To make releases safer, I set up automated testing, Git-based code review, and GitLab CI/CD for production data services. Deployments went from 1 to 6 production changes per month, with standardized rollback and release validation. I also designed Kafka-backed event ingestion and FastAPI service boundaries, which gave operational systems and analytics workloads durable data contracts and reusable interfaces.</p>
+          </div>
+          <ul class="tl__tags"><li>Python</li><li>SQL</li><li>PySpark</li><li>Apache Kafka</li><li>FastAPI</li><li>dbt</li><li>Databricks</li><li>Snowflake</li><li>GitLab CI/CD</li><li>Data Engineering</li></ul>
+        </div>
+      </article>
+
+      <article class="tl__card">
+        <div class="tl__meta">
+          <div class="tl__inner">
+            <span class="tl__period">May 2025 - Aug 2025</span>
+            <h3 class="tl__role">Data Scientist</h3>
+            <p class="tl__org">Indiana University School of Medicine</p>
+            <img class="tl__logo logo--color" src="assets/logos/iu.png" alt="Indiana University School of Medicine" loading="lazy">
+          </div>
+        </div>
+        <div class="tl__main">
+          <div class="tl__b">
+            <p>At the Indiana University School of Medicine, I built the machine learning platform for identifying high-risk patients from electronic health records. I aimed to turn research requirements into software that was reproducible, tested, and ready for clinical decision-support use.</p>
+            <p>I built a clinical feature platform with Python, SQL, PySpark, and dbt, using typed modules, Pytest integration coverage, deterministic transformations, and leakage controls. This reduced regression defects from 11 to 2 per release. On the modeling side, I developed calibrated ensemble models with temporal validation, MLflow experiment tracking, and Optuna-based hyperparameter optimization, improving high-risk case identification by 20% at a clinically constrained precision threshold.</p>
+            <p>I served the models through FastAPI and Docker with health checks, bounded concurrency, request validation, and graceful failure handling. Across a 90K+ encounter validation workload, this achieved 9,994 successful inference completions per 10,000 requests. I also added model versioning, SHAP-based explanation APIs, Great Expectations data validation, Evidently monitoring, and reproducible deployment workflows for downstream integration.</p>
+          </div>
+          <ul class="tl__tags"><li>Python</li><li>SQL</li><li>PySpark</li><li>dbt</li><li>MLflow</li><li>Optuna</li><li>SHAP</li><li>FastAPI</li><li>Docker</li><li>Great Expectations</li></ul>
+        </div>
+      </article>
+
+      <article class="tl__card">
+        <div class="tl__meta">
+          <div class="tl__inner">
+            <span class="tl__period">Jun 2023 - Jul 2024</span>
+            <h3 class="tl__role">Software Engineer - ML &amp; Data Systems</h3>
+            <p class="tl__org">Tata Consultancy Services Ltd.</p>
+            <img class="tl__logo tl__logo--tcs" src="assets/logos/tcs.png" alt="Tata Consultancy Services" loading="lazy">
+          </div>
+        </div>
+        <div class="tl__main">
+          <div class="tl__b">
+            <p>At TCS, I worked as an ML systems engineer on data and workflow automation for an energy-sector client. My focus was replacing manual operations with monitored, reliable services and keeping the data platform trustworthy and cost-efficient.</p>
+            <p>I automated operational workflows with 15+ Airflow-orchestrated Python services, with dependency management, retries, exception routing, and SLA monitoring. This eliminated about 200 staff hours of manual processing per month. I also implemented dbt tests and Great Expectations validation for schema drift, freshness, null handling, and referential integrity, with automated quarantine for failed data. Invalid downstream dataset releases dropped from 23 to 5 per quarter.</p>
+            <p>On the infrastructure side, I cut idle Snowflake warehouse consumption from 480 to 190 warehouse-hours per month through workload profiling, incremental dbt models, scheduling changes, and right-sizing. I also operationalized containerized workloads with Docker, Kubernetes, AWS CDK, and CloudWatch, which supported code review, automated builds, deployment controls, centralized diagnostics, and production incident investigation.</p>
+          </div>
+          <ul class="tl__tags"><li>Apache Airflow</li><li>Python</li><li>Snowflake</li><li>dbt</li><li>Great Expectations</li><li>Docker</li><li>Kubernetes</li><li>AWS CDK</li><li>Amazon CloudWatch</li><li>Data Quality</li></ul>
+        </div>
+      </article>
+
+      <article class="tl__card">
+        <div class="tl__meta">
+          <div class="tl__inner">
+            <span class="tl__period">Jun 2022 - May 2023</span>
+            <h3 class="tl__role">Computer Vision Engineer</h3>
+            <p class="tl__org">Ford Motor Company</p>
+            <img class="tl__logo tl__logo--ford" src="assets/logos/ford.png" alt="Ford Motor Company" loading="lazy">
+          </div>
+        </div>
+        <div class="tl__main">
+          <div class="tl__b">
+            <p>At Ford Motor Company, I worked on computer vision for defect detection on assembly parts on the manufacturing line. My focus was making the models better at catching the defects that occur least often.</p>
+            <p>The training data was heavily imbalanced, with a 90:10 defect-class split across 300K images. I built a CycleGAN and OpenCV synthetic augmentation pipeline in PyTorch and TensorFlow that rebalanced it to 60:40, improving minority-class representation and model robustness.</p>
+            <p>I then fine-tuned ResNet-50 on the augmented data, with defect evaluation and taxonomy alignment. This cut defect false negatives by 50% and reached 0.91 recall.</p>
+          </div>
+          <ul class="tl__tags"><li>Computer Vision</li><li>PyTorch</li><li>TensorFlow</li><li>OpenCV</li><li>CycleGAN</li><li>GANs</li><li>ResNet-50</li><li>Data Augmentation</li><li>Synthetic Data Generation</li><li>Defect Detection</li></ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 TECHNICAL SKILLS ============ -->
+<section class="arsenal" id="skills" data-film="margin" aria-labelledby="skillsTitle">
+  <span class="idx">03 / Technical skills</span>
+  <h2 class="sec__t" id="skillsTitle" data-reveal="line">Technical Skills</h2>
+  <div class="ars">
+    <div class="ars__g">
+      <h3>Programming &amp; Scripting</h3>
+      <ul><li>Python</li><li>SQL</li><li>R</li><li>Java</li><li>C++</li><li>Typescript</li><li>Bash</li><li>PowerShell</li><li>VBA (Excel Macros)</li></ul>
+    </div>
+    <div class="ars__g">
+      <h3>GenAI &amp; LLM Systems</h3>
+      <ul><li>LangChain</li><li>LangGraph</li><li>RAG</li><li>MCP</li><li>LLM Evaluation</li><li>OpenAI API</li><li>Qdrant</li><li>Ollama</li><li>OpenAI Tool / Function Calling</li><li>Agentic AI</li><li>Human-in-the-Loop Systems</li><li>Vector DBs</li><li>FAISS</li></ul>
+    </div>
+    <div class="ars__g">
+      <h3>Machine Learning</h3>
+      <ul><li>PyTorch</li><li>TensorFlow/Keras</li><li>Scikit-learn</li><li>XGBoost</li><li>LightGBM</li><li>MLflow</li><li>Optuna</li><li>SHAP</li><li>OpenCV</li><li>ResNet</li><li>ONNX</li><li>ARIMA</li><li>GANs</li><li>Feature Engineering</li></ul>
+    </div>
+    <div class="ars__g">
+      <h3>Data Engineering &amp; Quality</h3>
+      <ul><li>dbt</li><li>Apache Airflow</li><li>PySpark</li><li>Snowflake</li><li>Apache Kafka</li><li>MongoDB</li><li>PostgreSQL</li><li>Great Expectations</li><li>ETL/ELT Pipelines</li><li>Databricks</li></ul>
+    </div>
+    <div class="ars__g">
+      <h3>Cloud, MLOps &amp; APIs</h3>
+      <ul><li>AWS (EC2, VPC, Auto Scaling, AWS CDK)</li><li>Microsoft Azure</li><li>FastAPI</li><li>Docker</li><li>GitLab CI/CD</li><li>REST APIs</li><li>Model Serving</li></ul>
+    </div>
+    <div class="ars__g">
+      <h3>Analytics &amp; Visualization</h3>
+      <ul><li>Power BI</li><li>Tableau</li><li>DAX</li><li>Streamlit</li><li>Advanced Excel</li><li>Statistical Analysis</li><li>Forecasting</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 PROJECTS ============ -->
+<section class="work" id="work" data-film="margin" aria-labelledby="workTitle">
+  <span class="idx">04 / Projects</span>
+  <h2 class="sec__t" id="workTitle" data-reveal="line">Projects</h2>
+
+  <article class="prj" data-cursor="view">
+    <span class="prj__n" aria-hidden="true">001</span>
+    <div class="prj__body">
+      <h3 class="prj__t" data-split="char">AI Clinical Trial Matching Assistant</h3>
+      <p class="prj__thesis" data-reveal="line">An assistant that helps patients find live clinical trials, and refuses to answer the questions it should not.</p>
+      <p class="prj__d" data-reveal="line">A <strong>LangGraph</strong> state machine drives the conversation across nine components: an intake node that merges condition, demographics and prior treatments across turns, a clarify node that asks one question at a time, and retrieval that runs in two stages: <strong>Qdrant</strong> vector search followed by cross-encoder reranking, joined against structured eligibility in <strong>PostgreSQL 16</strong>. An <strong>Airflow</strong> DAG syncs ClinicalTrials.gov nightly, and when a condition is not yet indexed the engine queries the v2 API live, scrubs PII and upserts to Qdrant within two to three seconds. LLM calls route <strong>Groq to Gemini</strong> with local <strong>Ollama</strong> as fallback.</p>
+      <p class="prj__callout">Medication questions are intercepted before search routing: the system refuses unsupervised instructions and returns physician-contact and red-flag guidance instead.</p>
+      <div class="prj__m"><div><span data-count="9">0</span><i>system components</i></div><div><span data-count="2" data-suffix="-stage">0</span><i>hybrid retrieval</i></div><div><span data-count="3" data-prefix="&lt;" data-suffix="s">0</span><i>live trial ingestion</i></div></div>
+      <ul class="prj__tags"><li>LangGraph</li><li>FastAPI</li><li>Qdrant</li><li>PostgreSQL</li><li>Apache Airflow</li><li>Groq</li><li>Gemini</li><li>Ollama</li><li>React</li><li>Docker</li></ul>
+      <div class="prj__links"><a class="btn" href="https://github.com/suryamothukuri/ai-clinical-trial-matching-agent" target="_blank" rel="noopener">GitHub →</a></div>
+    </div>
+    <div class="prj__viz" data-viz="trial" aria-hidden="true"></div>
+  </article>
+
+  <article class="prj" data-cursor="view">
+    <span class="prj__n" aria-hidden="true">002</span>
+    <div class="prj__body">
+      <h3 class="prj__t" data-split="char">DriftLens</h3>
+      <p class="prj__sub">Document Semantic Drift Engine</p>
+      <p class="prj__thesis" data-reveal="line">Ten years of SEC filings, measured for meaning rather than words.</p>
+      <p class="prj__d" data-reveal="line">Standard diffing tells you which words changed. DriftLens embeds every paragraph of <strong>Item 1A, Risk Factors</strong> with <strong>bge-small-en-v1.5</strong>, reduces with <strong>UMAP</strong>, clusters themes with <strong>HDBSCAN</strong>, then measures the cosine distance between a theme’s mean embedding in year N and year N−1, so it catches a company saying something genuinely different even when the vocabulary barely moves. Materiality is weighted by <code>abs(intensity_delta) × log(1 + chunk_count)</code>, so a one-paragraph theme cannot outrank a fifteen-paragraph one.</p>
+      <p class="prj__callout">Every LLM explanation is built only from verbatim excerpts, with source chunk IDs stored alongside it, so each claim links back to the exact filing paragraph it came from.</p>
+      <div class="prj__m"><div><span data-count="85" data-prefix="≥" data-suffix="%">0</span><i>section extraction rate</i></div><div><span data-count="5" data-suffix="-phase">0</span><i>medallion pipeline</i></div><div><span data-count="0" data-prefix="$" data-suffix="/mo">0</span><i>inference cost at rest</i></div></div>
+      <ul class="prj__tags"><li>bge-small</li><li>UMAP</li><li>HDBSCAN</li><li>Apache Parquet</li><li>DuckDB-Wasm</li><li>Ollama</li><li>Streamlit</li><li>GitHub Actions</li></ul>
+      <div class="prj__links"><a class="btn" href="https://github.com/suryamothukuri/driftlens" target="_blank" rel="noopener">GitHub →</a><a class="btn" href="https://suryamothukuri.github.io/driftlens/" target="_blank" rel="noopener">Live engine →</a><a class="btn" href="https://driftlens-dashboard.streamlit.app/" target="_blank" rel="noopener">Dashboard →</a></div>
+    </div>
+    <div class="prj__viz" data-viz="drift" aria-hidden="true"></div>
+  </article>
+
+  <div class="pfilter" id="pfilter" role="group" aria-label="Filter projects by discipline"></div>
+  <div class="pgrid" id="pgrid">
+    <article class="pcard" data-cursor="view" data-cat="Engineering">
+      <span class="pcard__n" aria-hidden="true">003</span>
+      <h3 class="pcard__t">True Size Atlas &amp; Map Distortion Labs</h3>
+      <p class="pcard__thesis">Greenland looks bigger than Africa. Africa is fourteen times larger.</p>
+      <p class="pcard__d">An interactive 3D cartography lab in <strong>React 19</strong> and <strong>D3</strong>. Drag a split curtain between Mercator and Equal Earth, pick up any country and move it across latitude bands using unit-quaternion shortest-arc rotation that holds area error under 0.1% while Mercator inflates by sec²(φ), or scale nations as Dorling cartograms by population, GDP, carbon, forest and true land area.</p>
+      <ul class="pcard__tags"><li>React 19</li><li>TypeScript</li><li>D3.js</li><li>Vite</li><li>TopoJSON</li><li>FastAPI</li><li>Web Audio API</li><li>Vitest</li></ul>
+      <div class="pcard__links"><a class="btn btn--sm" href="https://github.com/suryamothukuri/map-distortion-project" target="_blank" rel="noopener">GitHub →</a><a class="btn btn--sm" href="https://map-distortion-explorer.vercel.app" target="_blank" rel="noopener">Live demo →</a></div>
+    </article>
+    <article class="pcard" data-cursor="view" data-cat="Machine Learning">
+      <span class="pcard__n" aria-hidden="true">004</span>
+      <h3 class="pcard__t">Home Credit Default Risk</h3>
+      <p class="pcard__thesis">Predicting repayment for applicants with little or no credit history.</p>
+      <p class="pcard__d">A leakage-free modelling workflow over <strong>307,511 applications</strong> and 122 columns, extended with engineered features from bureau records and installment history. Ten pipelines were benchmarked end to end: histogram-based gradient boosting reached <strong>0.772 test AUC</strong>, against 0.606 for the logistic baseline, and the engineered feature set gave no meaningful lift over the base set, which is itself the finding.</p>
+      <ul class="pcard__tags"><li>Python</li><li>Scikit-learn</li><li>Gradient Boosting</li><li>Random Forest</li><li>Feature Engineering</li><li>Kaggle</li></ul>
+      <div class="pcard__links"><a class="btn btn--sm" href="https://github.com/suryamothukuri/Loan-Repayment-Risk-Modeling-using-Multi-Source-Data" target="_blank" rel="noopener">GitHub →</a></div>
+    </article>
+    <article class="pcard" data-cursor="view" data-cat="Machine Learning">
+      <span class="pcard__n" aria-hidden="true">005</span>
+      <h3 class="pcard__t">The Rise of Generative AI in Online Discourse</h3>
+      <p class="pcard__thesis">How nine communities talk about the tools they are still deciding how to feel about.</p>
+      <p class="pcard__d">Posts and recursively flattened comment trees collected from <strong>nine subreddits</strong>: r/ChatGPT, r/Midjourney, r/StableDiffusion, r/OpenAI, r/MachineLearning and others, all through Reddit’s public JSON endpoints rather than the authenticated API. <strong>VADER</strong> scores tone, <strong>BERTopic</strong> surfaces the themes, and the two are compared across post versus comment context and across technical, creative and general-interest communities.</p>
+      <ul class="pcard__tags"><li>Python</li><li>BERTopic</li><li>VADER</li><li>Sentence-Transformers</li><li>NLP</li><li>Pandas</li></ul>
+      <div class="pcard__links"><a class="btn btn--sm" href="https://github.com/suryamothukuri/Reddit-Based-Social-Media-Analysis-of-Generative-AI" target="_blank" rel="noopener">GitHub →</a></div>
+    </article>
+    <article class="pcard" data-cursor="view" data-cat="Analytics &amp; Viz">
+      <span class="pcard__n" aria-hidden="true">006</span>
+      <h3 class="pcard__t">Etsy Retail Marketing Analysis</h3>
+      <p class="pcard__thesis">Does cause-marketing language actually sell, once you control for price?</p>
+      <p class="pcard__d"><strong>10,406 Etsy listings</strong> modelled against log review count. Sentiment, emotion scoring, lexical diversity, personalisation language, readability and trust signals are engineered from the description text, then tested with OLS regression controlling for price, rating and product category, so the question becomes which linguistic features survive the controls.</p>
+      <ul class="pcard__tags"><li>Python</li><li>OLS Regression</li><li>Sentiment Analysis</li><li>Statsmodels</li><li>Feature Engineering</li></ul>
+      <div class="pcard__links"><a class="btn btn--sm" href="https://github.com/suryamothukuri/Etsy-Retail-Marketing-Analysis" target="_blank" rel="noopener">GitHub →</a></div>
+    </article>
+    <article class="pcard" data-cursor="view" data-cat="Analytics &amp; Viz">
+      <span class="pcard__n" aria-hidden="true">007</span>
+      <h3 class="pcard__t">NYC Airbnb Market Dynamics</h3>
+      <p class="pcard__thesis">Pricing, availability and host behaviour across five boroughs.</p>
+      <p class="pcard__d">A spatio-temporal exploration of <strong>48,895 listings</strong> across 16 columns, covering listing density, price distribution by room type, minimum-night policy, review velocity and availability, rendered as interactive <strong>Folium</strong> maps alongside Seaborn and Plotly views. Built for INFO-I 590 Data Visualization at Indiana University.</p>
+      <ul class="pcard__tags"><li>Python</li><li>Folium</li><li>Plotly</li><li>Seaborn</li><li>Geospatial</li><li>EDA</li></ul>
+      <div class="pcard__links"><a class="btn btn--sm" href="https://github.com/suryamothukuri/Spatio-Temporal-Analysis-and-Visual-Exploration-of-NYC-Airbnb-Market-Dynamics" target="_blank" rel="noopener">GitHub →</a></div>
+    </article>
+    <article class="pcard" data-cursor="view" data-cat="Engineering">
+      <span class="pcard__n" aria-hidden="true">008</span>
+      <h3 class="pcard__t">Farmer Management System</h3>
+      <p class="pcard__thesis">Record-keeping for smallholder farms, with an audit trail the database enforces itself.</p>
+      <p class="pcard__d">A <strong>Flask</strong> and <strong>MySQL</strong> application covering authentication with Werkzeug password hashing, farmer registration and CRUD, farming categories and agro-product listings. Insert, update and delete activity is tracked by <strong>SQL triggers</strong> at the database layer rather than in application code, so the log cannot be bypassed.</p>
+      <ul class="pcard__tags"><li>Python</li><li>Flask</li><li>MySQL</li><li>Flask-SQLAlchemy</li><li>SQL Triggers</li><li>Bootstrap</li></ul>
+      <div class="pcard__links"><a class="btn btn--sm" href="https://github.com/suryamothukuri/Farmer-Management-Database-System" target="_blank" rel="noopener">GitHub →</a></div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 06 RESEARCH & MENTORSHIP ============ -->
+<section class="research" id="research" data-film="margin" aria-labelledby="resTitle">
+  <span class="idx">05 / Additional experience</span>
+  <h2 class="sec__t" id="resTitle" data-reveal="line">Research &amp; Mentorship</h2>
+
+  <div class="rlist">
+    <article class="rcard">
+      <span class="rcard__when">Jun 2026 - Sep 2026</span>
+      <h3 class="rcard__role">Research &amp; Data Analysis Mentor</h3>
+      <p class="rcard__org">Research Education &amp; Consulting, LLC</p>
+      <ul class="rcard__b">
+        <li>Mentored 4+ student researchers over a 16-week program, guiding projects from research-question development and hypothesis formulation through data preparation, statistical modeling, interpretation, and final presentation.</li>
+        <li>Supported quantitative studies spanning AI washing, brand and pricing analysis, compensation structure, and community response to data-center development, applying regression, interaction, mediation, and descriptive-analysis techniques.</li>
+      </ul>
+      <ul class="rcard__tags"><li>Research Design</li><li>Statistical Modeling</li><li>Regression</li><li>Mediation Analysis</li><li>Mentorship</li></ul>
+    </article>
+
+    <article class="rcard">
+      <span class="rcard__when">Aug 2025 - May 2026</span>
+      <img class="rcard__logo logo--color" src="assets/logos/iu.png" alt="Indiana University Bloomington" loading="lazy">
+      <h3 class="rcard__role">Graduate Associate Instructor</h3>
+      <p class="rcard__org">Indiana University Bloomington · CSCI-P 556</p>
+      <ul class="rcard__b">
+        <li>Mentored 200+ students in Applied Machine Learning, debugging Python and ML pipelines and strengthening core concepts (feature engineering, model evaluation, hyperparameter tuning) to improve assignment and capstone quality.</li>
+      </ul>
+      <ul class="rcard__tags"><li>Applied Machine Learning</li><li>Python</li><li>Model Evaluation</li><li>Teaching</li></ul>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 07 EDUCATION ============ -->
+<section class="edu" id="credentials" data-film="margin" aria-labelledby="eduTitle">
+  <span class="idx">06 / Education</span>
+  <h2 class="sec__t" id="eduTitle" data-reveal="line">Education</h2>
+
+  <div class="edu__list">
+    <article class="edu__item">
+      <div class="edu__logo"><img class="logo--color" src="assets/logos/iu.png" alt="Indiana University" loading="lazy"></div>
+      <div class="edu__body">
+        <div class="edu__top">
+          <h3>Indiana University Bloomington</h3>
+          <span class="edu__when">Aug 2024 - May 2026</span>
+        </div>
+        <p class="edu__deg">Master of Science, Data Science</p>
+        <p class="edu__meta">Luddy School of Informatics, Computing, and Engineering · Bloomington, IN</p>
+        <p class="edu__gpa">CGPA <span data-count="3.91" data-dec="2">0</span> / 4.0</p>
+        <div class="edu__cw">
+          <span class="edu__cwl">Relevant coursework</span>
+          <ul><li>Applied Machine Learning</li><li>Applied Database Technologies</li><li>Exploratory Data Analysis</li><li>Usable Artificial Intelligence</li><li>Social Media Mining</li><li>Statistics</li><li>Data Visualization</li></ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="edu__item">
+      <div class="edu__logo"><img src="assets/logos/iiitdm.png" alt="IIIT Chennai" loading="lazy"></div>
+      <div class="edu__body">
+        <div class="edu__top">
+          <h3>IIIT Chennai</h3>
+          <span class="edu__when">Aug 2018 - May 2023</span>
+        </div>
+        <p class="edu__deg">Bachelor’s and Master’s of Technology (Dual Degree), Electronics &amp; Communication Engineering</p>
+        <p class="edu__meta">Minor in Machine Learning &amp; Data Analytics · Chennai, India</p>
+        <p class="edu__gpa">CGPA <span data-count="3.70" data-dec="2">0</span> / 4.0</p>
+        <div class="edu__cw">
+          <span class="edu__cwl">Relevant coursework</span>
+          <ul><li>Machine Learning</li><li>Deep Learning</li><li>Data Analytics</li><li>Python Programming</li><li>Signal Processing</li><li>Interdisciplinary Research</li><li>Introduction to Artificial Intelligence</li></ul>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 08 CONTACT ============ -->
+<section class="cta" id="contact" data-film="feature" aria-labelledby="ctaTitle">
+  <span class="idx">07 / Contact</span>
+
+  <div class="cta__grid">
+    <div class="cta__lede">
+      <h2 class="cta__t" id="ctaTitle" data-split="word">Let's build something that <em>has to work.</em></h2>
+      <p class="cta__sub" data-reveal="line">Currently in New York City. Open to relocation.<br>Hiring, building, or just curious where this is all going? Coffee’s on me.</p>
+    </div>
+
+    <div class="chan">
+      <a class="chan__r" href="mailto:suryamothuk23@gmail.com" data-copy="suryamothuk23@gmail.com"><i>Email</i><b>suryamothuk23@gmail.com</b><s>→</s></a>
+      <a class="chan__r" href="https://www.linkedin.com/in/surya-mothukuri/" target="_blank" rel="noopener"><i>LinkedIn</i><b>/in/surya-mothukuri</b><s>→</s></a>
+      <a class="chan__r" href="https://github.com/suryamothukuri" target="_blank" rel="noopener"><i>GitHub</i><b>/suryamothukuri</b><s>→</s></a>
+    </div>
+  </div>
+
+  <form class="form" id="form" novalidate>
+    <div class="form__f">
+      <label for="fName">Name</label>
+      <input id="fName" name="name" type="text" autocomplete="name" required aria-describedby="eName">
+      <p class="form__e" id="eName" role="alert"></p>
+    </div>
+    <div class="form__f">
+      <label for="fEmail">Email</label>
+      <input id="fEmail" name="email" type="email" autocomplete="email" required aria-describedby="eEmail">
+      <p class="form__e" id="eEmail" role="alert"></p>
+    </div>
+    <div class="form__f form__f--w">
+      <label for="fMsg">Message</label>
+      <textarea id="fMsg" name="message" rows="1" required aria-describedby="eMsg"></textarea>
+      <p class="form__e" id="eMsg" role="alert"></p>
+    </div>
+    <div class="form__act">
+      <button class="btn btn--solid" type="submit" id="fSend">Send message →</button>
+      <p class="form__status" id="fStatus" role="status" aria-live="polite"></p>
+    </div>
+  </form>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="ftr">
+  <div class="ftr__meta">
+    <span>© 2026 Surya Teja Mothukuri</span>
+    <span>New York City, NY</span>
+    <span id="clock">--:--:--</span>
+  </div>
+  <button class="top" id="top-btn" type="button" aria-label="Back to top">↑</button>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+<script src="assets/facts.js" defer></script>
+<script src="script.js" defer></script>
+</body>
+</html>

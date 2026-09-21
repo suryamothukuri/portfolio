@@ -1,0 +1,220 @@
+/* ========================================================================
+   The intro puzzle.
+
+   The agent-loop circuit, its four stations, the travelling pulse, the fact
+   panel and the seven-second countdown.
+   ======================================================================== */
+
+/* ========================= GATE =========================
+   Intro puzzle. Close the agent loop, read a fact, enter. Everything here is
+   progressive: no JS, or reduced motion, and the gate never appears. */
+.gate {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--void);
+  display: grid; place-items: center;
+  padding: var(--gutter);
+  transition: opacity 0.7s var(--ease-out), visibility 0.7s;
+}
+.gate.is-done { opacity: 0; visibility: hidden; pointer-events: none; }
+
+/* A real desk at night. Each theme gets its own grade rather than one plate at
+   two opacities: the dark plate has its shadows lifted so the room is legible
+   against near black, the light plate is pushed up into pale greys so it reads
+   as structure on cream instead of a hole. The vignette keeps the middle clear
+   for the loop, so the photo stays a room you are in, not the subject. */
+.gate__bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background: url('assets/img/dark/gate-bg.jpg') center/cover no-repeat;
+  opacity: 0.5;
+}
+:root[data-theme="light"] .gate__bg {
+  background-image: url('assets/img/light/gate-bg.jpg');
+  opacity: 0.78;
+}
+.gate__bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 48%, var(--void) 2%,
+              color-mix(in srgb, var(--void) 55%, transparent) 34%, var(--void) 88%);
+}
+/* light mode carries a paler plate, so the same veil erased the room entirely;
+   it holds only enough behind the loop to keep the labels off the photo */
+:root[data-theme="light"] .gate__bg::after {
+  background: radial-gradient(ellipse at 50% 48%, color-mix(in srgb, var(--void) 78%, transparent) 4%,
+              color-mix(in srgb, var(--void) 26%, transparent) 40%, var(--void) 94%);
+}
+
+.gate__id {
+  position: absolute; left: var(--gutter); top: 30px;
+  display: flex; flex-direction: column; gap: 7px;
+}
+.gate__name {
+  font-family: var(--f-mono); font-size: 0.8125rem; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.22em; color: var(--text);
+}
+.gate__title {
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.2em; color: var(--ember);
+}
+
+.gate__inner { position: relative; width: 100%; max-width: 820px; text-align: center; }
+
+.gate__eyebrow {
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.22em;
+  color: var(--text-dim); margin-bottom: clamp(28px, 5vh, 48px);
+  transition: opacity 0.3s var(--ease-out);
+}
+
+/* ---- the circuit ----
+   Four stations on a rounded track: Observe, Reason, the empty socket, Learn.
+   The dotted board and the direction chevrons make it read as a schematic
+   rather than a shape, and a pulse runs the track and dies at the socket, so
+   the missing step announces itself without a sentence of instructions. */
+.gate__loop {
+  position: relative; width: min(500px, 88vw); aspect-ratio: 360 / 240;
+  margin: 0 auto;
+}
+.gate__ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.gate__dot { fill: var(--line); }
+.gate__board { opacity: 0.85; }
+.gate__arc {
+  fill: none; stroke: var(--line-strong); stroke-width: 1.5;
+  stroke-linecap: round; transition: stroke 0.5s var(--ease-out);
+}
+.gate__arc--gap {
+  stroke: color-mix(in srgb, var(--ember) 55%, transparent);
+  stroke-dasharray: 5 7;
+  transition: stroke 0.5s var(--ease-out), stroke-dasharray 0.5s var(--ease-out);
+}
+.gate__flow path {
+  fill: none; stroke: var(--line-strong); stroke-width: 1.5;
+  stroke-linecap: round; stroke-linejoin: round;
+  transition: stroke 0.5s var(--ease-out);
+}
+.gate.is-solved .gate__arc--gap { stroke: var(--ember); stroke-dasharray: none; }
+.gate.is-solved .gate__arc,
+.gate.is-solved .gate__flow path { stroke: var(--ember); }
+
+.gate__node, .gate__slot, .gate__chip {
+  font-family: var(--f-mono); font-size: 0.8125rem;
+  text-transform: uppercase; letter-spacing: 0.16em;
+  padding: 0 20px; height: 56px;
+  display: inline-flex; align-items: center; gap: 11px; white-space: nowrap;
+}
+/* the step number, so the loop reads in order even before you play it */
+.gate__node b, .gate__slot b, .gate__chip b {
+  font-size: var(--t-micro); font-weight: 500; letter-spacing: 0.12em;
+  color: var(--ember); opacity: 0.8;
+}
+.gate__node, .gate__slot {
+  position: absolute; transform: translate(-50%, -50%);
+  background: var(--void);
+}
+.gate__node { border: 1px solid var(--line-strong); color: var(--text); }
+.gate__node--n1 { left: 50%;     top: 10.83%; }
+.gate__node--n2 { left: 80.56%;  top: 50%; }
+.gate__node--n4 { left: 19.44%;  top: 50%; }
+.gate__slot {
+  left: 50%; top: 89.17%;
+  min-width: 132px; justify-content: center;
+  border: 1px dashed color-mix(in srgb, var(--ember) 70%, transparent);
+  background: var(--ember-soft);
+  transition: background-color 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
+}
+.gate__slot b { opacity: 0.55; }
+.gate__slotT { color: var(--ember); font-size: 1rem; }
+@media (prefers-reduced-motion: no-preference) {
+  .gate__slot:not(.is-filled) { animation: gsocket 2.4s var(--ease-io) infinite; }
+}
+@keyframes gsocket {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--ember) 26%, transparent); }
+  55%      { box-shadow: 0 0 0 10px color-mix(in srgb, var(--ember) 0%, transparent); }
+}
+.gate__slot.is-over { background: color-mix(in srgb, var(--ember) 28%, transparent); }
+.gate__slot.is-filled {
+  border-style: solid; border-color: var(--ember);
+  background: var(--ember); color: var(--void); animation: none;
+}
+.gate__slot.is-filled b { color: var(--void); opacity: 0.7; }
+/* the pulse that runs the track */
+.gate__spark {
+  position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px;
+  border-radius: 50%; background: var(--ember);
+  box-shadow: 0 0 14px 4px color-mix(in srgb, var(--ember) 55%, transparent);
+  pointer-events: none; opacity: 0;
+}
+
+.gate__chip {
+  margin: clamp(30px, 5vh, 52px) auto 0;
+  border: 1px solid var(--ember); color: var(--ember);
+  background: var(--ember-soft);
+  cursor: grab; touch-action: none;
+  transition: transform 0.28s var(--ease-out), opacity 0.2s linear;
+}
+.gate__chip:active { cursor: grabbing; }
+.gate__chip.is-dragging { transition: none; cursor: grabbing; position: relative; z-index: 2; }
+.gate__chip.is-gone { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .gate__chip:not(.is-dragging):not(.is-gone) { animation: gnudge 2.4s var(--ease-io) infinite; }
+}
+@keyframes gnudge { 0%,72%,100% { transform: translateY(0); } 82% { transform: translateY(-7px); } }
+.gate__hint {
+  display: block; margin-top: 16px;
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-faint);
+  transition: opacity 0.3s var(--ease-out);
+}
+.gate.is-solved .gate__hint { opacity: 0; }
+
+.gate__fact { margin-top: clamp(34px, 6vh, 60px); }
+.gate__factLabel {
+  display: block;
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.22em;
+  color: var(--ember); margin-bottom: 16px;
+}
+.gate__factText {
+  font-family: var(--f-display); font-weight: 400;
+  font-size: clamp(1.4rem, 3.1vw, 2.35rem); line-height: 1.26;
+  letter-spacing: -0.015em; color: var(--text);
+  max-width: 34ch; margin: 0 auto; text-wrap: pretty;
+}
+.gate__enter {
+  display: block; margin-top: clamp(24px, 4vh, 40px);
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.22em;
+  color: var(--text-faint);
+}
+/* the gate lets go on its own once the fact has been up long enough, so the
+   wait is shown rather than sprung */
+.gate__count {
+  width: 132px; height: 1px; margin: 18px auto 0;
+  background: var(--line); overflow: hidden;
+}
+.gate__count span { display: block; height: 100%; width: 0; background: var(--ember); }
+
+.gate__skip {
+  position: absolute; right: var(--gutter); top: 30px;
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.18em;
+  color: var(--text-faint); padding: 8px 4px; min-height: 40px;
+}
+.gate__skip:hover { color: var(--ember); }
+
+.gate__load { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--line); }
+.gate__load span {
+  display: block; height: 100%; width: 0%;
+  background: var(--ember); transition: width 0.4s var(--ease-out);
+}
+
+@media (max-width: 620px) {
+  .gate__id { top: 20px; }
+  .gate__loop { width: min(340px, 92vw); }
+  .gate__node, .gate__slot, .gate__chip {
+    height: 40px; padding: 0 11px; gap: 7px; font-size: var(--t-micro);
+  }
+  .gate__node b, .gate__slot b, .gate__chip b { display: none; }
+  .gate__slot { min-width: 78px; }
+}
+.no-js .gate { display: none; }
+@media (prefers-reduced-motion: reduce) { .gate { display: none; } }

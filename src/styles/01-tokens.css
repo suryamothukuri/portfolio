@@ -1,0 +1,105 @@
+/* ========================================================================
+   Design tokens and the two themes.
+
+   Every colour, type size and easing curve on the site resolves to a custom
+   property declared here, so a palette change is a change to this file alone.
+   ======================================================================== */
+
+/* ==========================================================================
+   SURYA TEJA MOTHUKURI — LATENT SPACE
+   Design tokens → reset → layout → sections → motion → responsive
+   ========================================================================== */
+
+:root {
+  /* ——— DARK (default) ——— */
+  --void:        #07080B;
+  --surface:     #0D0F14;
+  --surface-2:   #14171E;
+  --text:        #E9EBF1;
+  --text-dim:    #A6ACBC;
+  --text-faint:  #9AA0AF;
+  --line:        rgba(233,235,241,0.17);
+  --line-strong: rgba(233,235,241,0.34);
+
+  --ember:       #FF7A2F;
+  --ember-soft:  rgba(255,122,47,0.14);
+  --cool:        #8FB3CC;
+
+  --grain-op:    0.045;
+  --vignette:    0.55;
+
+  /* ——— TYPE ——— */
+  --f-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --f-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --f-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* DISPLAY — Instrument Serif. Headings and titles only, nothing else. */
+  --t-hero:    clamp(2.4rem, 7.2vw, 7rem);      /* the name, once */
+  --t-feature: clamp(2rem, 5.4vw, 4.4rem);      /* feature project titles */
+  --t-section: clamp(1.9rem, 4.2vw, 3.6rem);    /* every section heading */
+  --t-title:   clamp(1.45rem, 2.5vw, 2.15rem);  /* every card title */
+
+  /* READING — Inter. Anything read as a sentence. */
+  --t-lead:    clamp(1.05rem, 1.5vw, 1.4rem);   /* section lead paragraphs */
+  --t-sub:     clamp(1rem, 1.3vw, 1.22rem);     /* secondary lead */
+  --t-body:    clamp(0.95rem, 1.05vw, 1.05rem); /* body copy, bullets */
+  --t-meta:    0.875rem;                        /* org / school / meta lines */
+
+  /* LABEL — JetBrains Mono, uppercase, tracked. Metadata and chips only. */
+  --t-label:   0.75rem;
+  --t-date:    0.8125rem;                       /* period / date lines */
+  --t-micro:   0.625rem;                        /* inside data panels only */
+
+  /* NUMERIC — JetBrains Mono, tabular. */
+  --t-num-l:   clamp(1.9rem, 3.6vw, 3.4rem);
+  --t-num-m:   clamp(1.5rem, 2.8vw, 2.4rem);
+
+  /* ——— MOTION ——— */
+  --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io:   cubic-bezier(0.65, 0, 0.35, 1);
+  --d-fast:    0.3s;
+  --d-base:    0.6s;
+
+  /* ——— LAYOUT ——— */
+  --gutter:    clamp(20px, 5vw, 96px);
+  --maxw:      1680px;
+  --hdr-h:     76px;
+
+  --vel: 0;
+}
+
+:root[data-theme="light"] {
+  /* ~10% off the old bone — the page was reading as flat white and every
+     other colour had nothing to sit against */
+  --void:        #DEDBD2;
+  --surface:     #D4D0C6;
+  --surface-2:   #E9E6DE;
+  --text:        #08090C;
+  /* secondary copy sat at #454A56 and read as grey against bone; these are
+     near-black now and keep only enough separation to hold hierarchy */
+  --text-dim:    #1A1D24;
+  --text-faint:  #2E333C;
+  --line:        rgba(10,11,14,0.22);
+  --line-strong: rgba(10,11,14,0.46);
+
+  --ember:       #B34309;
+  --ember-soft:  rgba(179,67,9,0.13);
+  --cool:        #2F5876;
+
+  --grain-op:    0.030;
+  --vignette:    0;
+}
+
+/* Light-mode only: the header sits on the brightest part of the film, so the
+   mark and nav need real weight behind them, not just a dark colour. */
+:root[data-theme="light"] .hdr__mark,
+:root[data-theme="light"] .hdr__nav a { color: #000; font-weight: 500; }
+:root[data-theme="light"] .hdr__ico,
+:root[data-theme="light"] .toggle { color: #000; }
+/* the eyebrow is ember on the film's hottest area — give it weight too */
+:root[data-theme="light"] .eyebrow { font-weight: 500; }
+/* the footer marquee reads as flat grey on bone at 0.45 */
+/* outlined buttons sit on the film; 46% was not enough on bone */
+:root[data-theme="light"] .btn {
+  border-color: color-mix(in srgb, var(--text) 72%, transparent);
+}

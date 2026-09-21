@@ -1,0 +1,125 @@
+/* ========================================================================
+   Everything conditional: breakpoints, reduced motion, print.
+
+   This file must stay last. Every rule in it is an override of something
+   declared above, at the same specificity, so it only wins by being later.
+   ======================================================================== */
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 1280px) {
+  .prj__n { left: 0; opacity: 0.04; }
+}
+
+@media (max-width: 1024px) {
+  :root { --hdr-h: 66px; }
+
+  .hdr__nav { display: none; }
+  .burger { display: block; }
+
+  .ars { grid-template-columns: 1fr; }
+
+  .prj { min-height: 0; }
+  .prj__n { position: static; transform: none !important; display: block; margin-bottom: -0.1em; }
+}
+
+@media (max-width: 1024px) {
+  .cta__grid { grid-template-columns: 1fr; gap: clamp(40px, 6vh, 72px); }
+  .cta__sub { max-width: 50ch; }
+  .chan__r b { font-size: var(--t-sub); }
+}
+
+@media (max-width: 860px) {
+  .form { grid-template-columns: 1fr; }
+  .chan__r { grid-template-columns: 1fr auto; row-gap: 4px; padding: 20px clamp(8px, 2vw, 20px); min-height: 0; }
+  .chan__r i { grid-column: 1 / -1; }
+  .chan__r b { word-break: break-word; }
+}
+
+@media (max-width: 560px) {
+  :root { --gutter: 20px; }
+
+  .rcard__logo { width: 52px; height: 52px; }
+  .rcard__when, .rcard__role { padding-right: 64px; }
+
+  .hero { padding-bottom: 32px; }
+  .hero__act { gap: 10px; }
+  .hero__act .btn { flex: 1 1 100%; }
+  .hero__meta { flex-direction: column; align-items: flex-start; gap: 8px; }
+
+  .prj__m { gap: 22px 34px; }
+  .prj__links .btn { flex: 1 1 100%; }
+
+  .ftr__meta { gap: 10px 20px; padding-right: 0; }
+  .top { position: static; margin-top: 28px; }
+}
+
+/* short landscape phones */
+@media (max-height: 560px) and (orientation: landscape) {
+  .hero, .mission, .cta { min-height: auto; padding-top: calc(var(--hdr-h) + 48px); padding-bottom: 64px; }
+}
+
+/* ==========================================================================
+   REDUCED MOTION — the site must be complete and readable with zero motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  html { scroll-behavior: auto; }
+  .grain { animation: none; }
+  .cursor { display: none !important; }
+  .film__canvas { transition: none; }
+  .tl__track { transform: none !important; }
+  .film__veil { transition: none; }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+@media print {
+  .film, .grain, .cursor, .hdr, .menu, .progress, .toast, .top { display: none !important; }
+  body { background: #fff; color: #000; }
+  section { padding: 24px 0; min-height: 0 !important; }
+  .tl__track { flex-direction: column; transform: none !important; }
+}
+
+/* count-up suffixes */
+/* suffixes (K, M, /mo, %) ride the baseline so every figure lines up flat */
+.stat__n sup, .prj__m span sup {
+  font-size: 0.46em; vertical-align: baseline;
+  color: var(--ember); letter-spacing: 0.02em;
+  margin-left: 0.06em;
+}
+
+/* moved here from the research part, where these sat after the responsive
+   block and only worked because of it */
+@media (max-width: 1024px) {
+    .pgrid { grid-template-columns: 1fr; gap: 0; }
+}
+@media (max-width: 1024px) {
+  .rlist { grid-template-columns: 1fr; }
+  .hdr__mark { font-size: var(--t-micro); letter-spacing: 0.14em; }
+}
+@media (max-width: 560px) {
+  .pcard__links .btn { flex: 1 1 100%; }
+  .hdr__ico { width: 32px; height: 32px; }
+  .hdr__mark { max-width: 40vw; white-space: normal; line-height: 1.3; }
+}
+
+
+/* the two-column panel layout, moved out of the viz part */
+@media (min-width: 1025px) {
+  .prj__body { max-width: none; }
+  .prj { display: grid; grid-template-columns: 1.08fr 0.92fr; gap: clamp(40px, 5vw, 90px); }
+  .prj__n { grid-column: 1; }
+}
+@media (max-width: 1024px) {
+  .prj__viz { margin-top: clamp(32px, 5vh, 56px); }
+}

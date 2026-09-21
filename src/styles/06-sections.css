@@ -1,0 +1,618 @@
+/* ========================================================================
+   The page sections, in the order they appear.
+
+   Hero, stats, mission, experience, skills, education, research, contact,
+   the form and the footer. Projects are large enough to have their own file.
+   
+   Education comes before research because the shared logo rules live in the
+   education block and research overrides two of them.
+   ======================================================================== */
+
+/* ========================= 01 HERO ========================= */
+.hero {
+  min-height: 100vh; min-height: 100dvh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding-bottom: clamp(40px, 8vh, 96px);
+  padding-top: calc(var(--hdr-h) + 40px);
+}
+/* The compute plate is bright and high-frequency right where the type sits, so
+   colour alone was never going to fix legibility — the copy needs a field to
+   sit on. Scrim from the left, clearing before the right half of the frame. */
+:root[data-theme="light"] .hero::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: linear-gradient(101deg,
+    var(--void) 0%,
+    color-mix(in srgb, var(--void) 92%, transparent) 26%,
+    color-mix(in srgb, var(--void) 62%, transparent) 46%,
+    color-mix(in srgb, var(--void) 22%, transparent) 64%,
+    transparent 80%);
+}
+.hero__inner, .hero__meta { position: relative; z-index: 1; }
+.hero__inner { max-width: var(--maxw); width: 100%; position: relative; }
+
+/* Portrait. No ring and no hard edge — the disc is masked so its rim fades to
+   nothing, which lets it sit inside the film plate rather than on top of it.
+   Hidden until the image actually decodes (see #portrait in script.js), so the
+   hero is unaffected while assets/photo.jpg is missing. */
+.portrait {
+  position: absolute; right: 0; top: 0;
+  width: clamp(168px, 18.5vw, 288px); aspect-ratio: 1;
+  margin: 0; border-radius: 50%; overflow: hidden;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.9s var(--ease-out);
+  /* feather the rim: opaque to ~62%, gone by the edge */
+  -webkit-mask-image: radial-gradient(circle at 50% 50%,
+    #000 0 56%, rgba(0,0,0,0.86) 72%, rgba(0,0,0,0.38) 88%, transparent 100%);
+          mask-image: radial-gradient(circle at 50% 50%,
+    #000 0 56%, rgba(0,0,0,0.86) 72%, rgba(0,0,0,0.38) 88%, transparent 100%);
+}
+.portrait.is-ready { opacity: 1; visibility: visible; }
+.portrait img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  /* settle it into the plate's contrast range instead of sitting proud of it */
+  filter: saturate(0.88) contrast(1.02);
+}
+:root[data-theme="light"] .portrait img { filter: saturate(0.9) contrast(0.98) brightness(1.02); }
+
+/* it shares the hero's top edge with the eyebrow, and must never crowd the name */
+@media (max-width: 900px) {
+  .portrait { width: clamp(120px, 24vw, 168px); }
+}
+@media (max-width: 560px) {
+  .portrait { position: static; width: 128px; margin-bottom: 22px; }
+}
+.hero__name {
+  font-family: var(--f-display); font-weight: 400;
+  font-size: var(--t-hero); line-height: 0.92;
+  letter-spacing: -0.035em;
+  margin: clamp(16px, 2.4vh, 32px) 0 clamp(16px, 2.2vh, 28px);
+  text-wrap: balance;
+}
+.hero__tag {
+  font-family: var(--f-display);
+  font-size: clamp(1.25rem, 2.9vw, 2.5rem);
+  line-height: 1.16; letter-spacing: -0.02em;
+  max-width: 24ch; text-wrap: balance;
+  margin-bottom: clamp(20px, 3vh, 36px);
+}
+.hero__tag em { color: var(--ember); font-style: italic; }
+.hero__sub {
+  font-size: var(--t-lead); color: var(--text-dim);
+  max-width: 52ch; line-height: 1.55;
+  text-wrap: pretty;
+}
+.hero__act { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(28px, 4vh, 48px); }
+.hero__meta {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-top: clamp(40px, 7vh, 88px);
+  padding-top: 20px; border-top: 1px solid var(--line);
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.18em;
+  color: var(--text-faint);
+  gap: 16px;
+}
+
+/* ========================= 02 STATS ========================= */
+/* A vertical ledger in the mission's right column — it used to be a full-bleed
+   horizontal band of its own between the hero and the mission. */
+.stats { padding: 0; }
+.stats__track { display: flex; flex-direction: column; }
+.stat {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  align-items: baseline; gap: 4px clamp(18px, 2vw, 30px);
+  padding: clamp(16px, 2.2vh, 24px) 0;
+  border-top: 1px solid var(--line);
+}
+.stat:last-child { border-bottom: 1px solid var(--line); }
+.stat__n {
+  font-family: var(--f-mono); font-weight: 500;
+  font-size: var(--t-num-l);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em; line-height: 1;
+  color: var(--text);
+  font-size: clamp(1.7rem, 2.6vw, 2.6rem);
+}
+.stat__n sup {
+  font-size: 0.46em; vertical-align: baseline;
+  color: var(--ember); letter-spacing: 0.02em;
+  margin-left: 0.06em;
+  opacity: 0;
+}
+.stat__l {
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.16em;
+  color: var(--text-dim); line-height: 1.55;
+  text-align: right;
+}
+
+/* ========================= 03 MISSION ========================= */
+.mission {
+  min-height: 100vh; min-height: 100dvh;
+  display: flex; flex-direction: column; justify-content: center;
+}
+/* the right half of this section was empty — the figures live there now */
+.mission__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(300px, 0.88fr);
+  gap: clamp(44px, 6vw, 120px);
+  align-items: center;
+  max-width: var(--maxw); width: 100%;
+}
+.mission__inner { max-width: 62ch; }
+.mission__lead {
+  font-family: var(--f-display); font-weight: 400;
+  font-size: var(--t-section); line-height: 1.12;
+  letter-spacing: -0.02em; max-width: 22ch;
+  margin-bottom: clamp(28px, 4vh, 48px);
+  text-wrap: balance;
+}
+.mission__body {
+  font-size: var(--t-lead); color: var(--text-dim);
+  max-width: 48ch; line-height: 1.66;
+  margin-bottom: clamp(28px, 4vh, 48px);
+  text-wrap: pretty;
+}
+.mission__kick {
+  font-family: var(--f-display);
+  font-size: clamp(1.4rem, 2.6vw, 2.3rem);
+  line-height: 1.2; letter-spacing: -0.02em;
+}
+.mission__kick em { color: var(--ember); }
+
+@media (max-width: 1024px) {
+  .mission__grid { grid-template-columns: 1fr; gap: clamp(40px, 6vh, 72px); }
+  .mission__inner { max-width: none; }
+  .stat__l { text-align: left; }
+}
+@media (max-width: 560px) {
+  .stat { grid-template-columns: 1fr; gap: 6px; }
+}
+
+/* ========================= 05 STORY ========================= */
+.story .sec__t { margin-bottom: clamp(22px, 3vh, 40px); }
+
+.tl { position: relative; }
+/* Stacked full-width bands. The copy is the client's verbatim prose, so the
+   fix for over-long cards is to give it twice the line length rather than to
+   cut it: meta rail left, text right. */
+.tl__track {
+  position: relative;
+  display: flex; flex-direction: column;
+  max-width: var(--maxw);
+  border-top: 1px solid var(--line);
+  padding-left: 0;
+}
+.tl__card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(230px, 0.26fr) minmax(0, 0.74fr);
+  gap: clamp(28px, 4vw, 72px);
+  padding: clamp(34px, 5vh, 60px) 0;
+  border-bottom: 1px solid var(--line);
+  --tint: var(--cool);
+}
+/* the spine: one continuous line down the whole list, filled to the scroll
+   position by #tlSpine so it reads as progress through the roles */
+.tl__spine {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+  background: var(--line);
+  pointer-events: none;
+}
+.tl__spine span {
+  display: block; width: 100%; height: 100%;
+  background: linear-gradient(180deg, #5C8FC4, #A98BA4 55%, var(--ember));
+  transform: scaleY(0); transform-origin: top;
+}
+/* the film's own arc, newest card to oldest */
+.tl__card:nth-of-type(1) { --tint: #5C8FC4; }
+.tl__card:nth-of-type(2) { --tint: #7E8FBC; }
+.tl__card:nth-of-type(3) { --tint: #A98BA4; }
+.tl__card:nth-of-type(4) { --tint: #D08A6B; }
+.tl__card:nth-of-type(5) { --tint: #FF7A2F; }
+/* the tint now reads as a hairline on the meta rail instead of a card wash */
+.tl__meta { position: relative; padding-left: 28px; }
+/* marker on the spine, dim until this role is the one being read */
+.tl__meta::before {
+  content: ''; position: absolute; left: -4px; top: 6px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--void);
+  box-shadow: inset 0 0 0 2px var(--line-strong);
+  transition: box-shadow 0.45s var(--ease-out), background-color 0.45s var(--ease-out);
+}
+.tl__card.is-live .tl__meta::before {
+  background: var(--tint);
+  box-shadow: inset 0 0 0 2px var(--tint), 0 0 0 5px color-mix(in srgb, var(--tint) 22%, transparent);
+}
+/* the rail rides along with the reader instead of scrolling away */
+/* Nothing is dimmed: the roles read at the same brightness as every other
+   section. Only the spine marker shows which one you are on. */
+@media (min-width: 861px) {
+  .tl__inner { position: sticky; top: calc(var(--hdr-h) + 40px); }
+}
+.tl__period {
+  display: block;
+  font-family: var(--f-mono); font-size: var(--t-date);
+  text-transform: uppercase; letter-spacing: 0.18em;
+  color: var(--ember); margin-bottom: 14px;
+}
+.tl__role {
+  font-family: var(--f-display); font-weight: 400;
+  font-size: var(--t-title); line-height: 1.05;
+  letter-spacing: -0.02em; margin-bottom: 6px;
+}
+.tl__org {
+  font-size: var(--t-sub); font-weight: 500; color: var(--cool);
+  margin-bottom: 20px;
+}
+/* Every PNG is trimmed to its ink, so height is the only lever and the left
+   edge lines up whatever the aspect. A common height is wrong, though: the TCS
+   wordmark is 3.6x as wide as it is tall and Ford's oval 2.8x, so matching
+   their height made them read three times the size of the square marks. These
+   heights match optical area to the square marks instead, plus the roughly 20%
+   a wordmark needs to hold its own. */
+.tl__logo {
+  height: 52px; width: auto;
+  display: block;
+}
+.tl__logo--ford { height: 37px; }
+.tl__logo--tcs  { height: 33px; }
+.tl__b { display: flex; flex-direction: column; gap: 14px; }
+.tl__b p {
+  font-size: calc(var(--t-body) - 0.5px); color: var(--text-dim);
+  line-height: 1.72; text-wrap: pretty;
+  overflow: hidden;              /* mask for the .tl__line reveal */
+  padding-bottom: 0.22em; margin-bottom: -0.22em;   /* keep descenders */
+}
+.tl__line { display: block; }
+.tl__tags {
+  margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; gap: 7px;
+}
+.tl__tags li {
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--text-dim); padding: 5px 9px;
+  border: 1px solid var(--line-strong); line-height: 1.35;
+}
+
+@media (max-width: 860px) {
+  .tl__card { grid-template-columns: 1fr; gap: 22px; }
+  .tl__logo { height: 42px; }
+  .tl__logo--ford { height: 30px; }
+  .tl__logo--tcs  { height: 27px; }
+}
+
+/* ========================= 06 ARSENAL ========================= */
+.ars {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 clamp(32px, 5vw, 96px);
+  max-width: var(--maxw);
+}
+.ars__g { padding: 26px 0; border-top: 1px solid var(--line); }
+.ars__g h3 {
+  /* one point over the mono label size: these are the only labels a reader
+     navigates by, so they carry a step the rest of the scale does not */
+  font-family: var(--f-mono); font-size: calc(var(--t-label) + 1.33px); font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.18em;
+  color: var(--ember);
+  margin-bottom: 22px;
+}
+.ars__g ul { display: flex; flex-wrap: wrap; column-gap: 30px; row-gap: 6px; }
+.ars__g li {
+  font-size: var(--t-body); color: var(--text);
+  position: relative; padding: 2px 0;
+  transition: color 0.22s var(--ease-out);
+  background-image: linear-gradient(var(--ember), var(--ember));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 0.3s var(--ease-out), color 0.22s var(--ease-out);
+}
+/* The rule is absolutely positioned in the column-gap, NOT inside the li. In
+   flow it added 30px to the li's width, so hiding one at a line end changed
+   that line's width and could pull the next item up — the measurement in
+   skillRules() then disagreed with itself and fused two skills together. Out
+   of flow, hiding a rule changes no geometry and the pass is idempotent. */
+.ars__g li:not(:last-child)::after {
+  content: ''; position: absolute; top: 50%; right: -16px;
+  transform: translateY(-50%);
+  width: 2px; height: 1.05em;
+  background: var(--text-dim);
+}
+/* set from JS on the last item of each visual line, which would otherwise
+   leave a rule dangling in open space */
+.ars__g li.is-eol::after { display: none; }
+.ars__g li:hover { color: var(--text); background-size: 100% 1px; }
+
+/* ========================= 08 EDUCATION ========================= */
+.edu__list { max-width: var(--maxw); border-top: 1px solid var(--line); }
+.edu__item {
+  display: grid; grid-template-columns: 96px 1fr;
+  gap: clamp(20px, 3vw, 44px);
+  padding: clamp(32px, 5vh, 56px) 0;
+  border-bottom: 1px solid var(--line);
+}
+.edu__logo {
+  width: 96px; height: 96px;
+  display: grid; place-items: center;
+}
+.edu__logo img { width: 100%; height: 100%; object-fit: contain; }
+.edu__top {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 24px; flex-wrap: wrap; margin-bottom: 10px;
+}
+.edu__top h3 {
+  font-family: var(--f-display); font-weight: 400;
+  font-size: var(--t-title); line-height: 1.02;
+  letter-spacing: -0.025em; color: var(--text);
+}
+.edu__when {
+  font-family: var(--f-mono); font-size: var(--t-date);
+  text-transform: uppercase; letter-spacing: 0.16em;
+  color: var(--ember); white-space: nowrap;
+}
+/* identity line beneath a title: Inter 500, --cool. Same rule as .tl__org
+   and .rcard__org, which education was the only section not following. */
+.edu__deg {
+  font-size: var(--t-sub); font-weight: 500;
+  color: var(--cool); margin-bottom: 6px;
+}
+.edu__meta { font-size: var(--t-sub); color: var(--text-dim); line-height: 1.6; }
+/* the client asked for the whole line to carry the highlight, not just the
+   digits, so the span override is gone rather than duplicated */
+.edu__gpa {
+  font-family: var(--f-mono); font-size: var(--t-meta); color: var(--ember);
+  margin-top: 12px; font-variant-numeric: tabular-nums;
+}
+.edu__cw { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+/* it introduces the coursework list, so it takes the identity blue the other
+   sub-headings use rather than sitting in the faint body grey */
+.edu__cwl {
+  display: block; margin-bottom: 12px;
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.2em; color: var(--cool);
+}
+.edu__cw ul { display: flex; flex-wrap: wrap; gap: 8px; }
+.edu__cw li {
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--text-dim); padding: 7px 12px; border: 1px solid var(--line);
+  transition: color 0.25s, border-color 0.25s;
+}
+.edu__cw li:hover { color: var(--text); border-color: var(--line-strong); }
+
+/* Research cards still use the card layout, so their mark stays pinned to the
+   top-right corner and out of the flow. The experience bands do not: their
+   mark sits in the meta rail under the company name (see .tl__logo above). */
+.rcard__logo {
+  position: absolute; top: clamp(20px, 2.6vw, 34px); right: clamp(24px, 3vw, 40px);
+  width: 70px; height: 70px; object-fit: contain; object-position: right top;
+}
+.rcard__when, .rcard__role { padding-right: 86px; }
+/* The marks ship as flat black ink on alpha, so one filter per theme covers all
+   six brands and Ford's knocked-out script survives either way. */
+.tl__logo, .rcard__logo, .edu__logo img { opacity: 0.92; }
+/* IU ships as real crimson, so it opts out of the monochrome treatment and
+   keeps that crimson in both themes. */
+:root[data-theme="dark"] .tl__logo:not(.logo--color),
+:root[data-theme="dark"] .rcard__logo:not(.logo--color),
+:root[data-theme="dark"] .edu__logo img:not(.logo--color) { filter: brightness(0) invert(1); }
+.logo--color { opacity: 1; }
+
+@media (max-width: 720px) {
+  .edu__item { grid-template-columns: 64px 1fr; gap: 18px; }
+  .edu__logo { width: 64px; height: 64px; }
+  .edu__top { flex-direction: column; gap: 6px; }
+}
+
+/* ==========================================================================
+   RESEARCH & MENTORSHIP
+   ========================================================================== */
+.rlist {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: clamp(20px, 2.4vw, 40px);
+  max-width: var(--maxw);
+}
+.rcard {
+  position: relative;
+  /* these sit over the data-wall plate, so they pick the arc up where the
+     experience row leaves it: gold into amber */
+  background:
+    linear-gradient(152deg, color-mix(in srgb, var(--tint) 18%, transparent) 0%,
+                            color-mix(in srgb, var(--tint) 4%, transparent) 42%,
+                            transparent 72%),
+    color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  padding: clamp(24px, 3vw, 40px);
+  display: flex; flex-direction: column;
+  transition: border-color 0.4s var(--ease-out);
+}
+.rcard:hover { border-color: var(--line-strong); }
+.rcard { --tint: #C9A227; }
+.rcard:nth-of-type(2) { --tint: #E08A3C; }
+:root[data-theme="light"] .rcard {
+  background:
+    linear-gradient(152deg, color-mix(in srgb, var(--tint) 13%, transparent) 0%,
+                            transparent 68%),
+    color-mix(in srgb, var(--surface) 88%, transparent);
+}
+.rcard__when {
+  font-family: var(--f-mono); font-size: var(--t-date);
+  text-transform: uppercase; letter-spacing: 0.18em;
+  color: var(--ember); margin-bottom: 18px;
+}
+.rcard__role {
+  font-family: var(--f-display); font-weight: 400;
+  font-size: var(--t-title); line-height: 1.05;
+  letter-spacing: -0.02em; margin-bottom: 6px;
+}
+.rcard__org {
+  font-size: var(--t-sub); font-weight: 500; color: var(--cool);
+  margin-bottom: 22px;
+}
+.rcard__b { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.rcard__b li {
+  font-size: var(--t-body); color: var(--text-dim);
+  line-height: 1.7; padding-left: 18px; position: relative; text-wrap: pretty;
+}
+.rcard__tags {
+  margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; gap: 7px;
+}
+.rcard__tags li {
+  font-family: var(--f-mono); font-size: var(--t-micro);
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--text-dim); padding: 5px 9px;
+  border: 1px solid var(--line-strong); line-height: 1.35;
+}
+.rcard__b li::before {
+  content: ''; position: absolute; left: 0; top: 0.85em;
+  width: 8px; height: 1px; background: var(--text-faint);
+}
+
+/* ========================= 09 CTA ========================= */
+.cta { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; }
+/* lede left, the four channels stacked hard right and aligned to the heading */
+.cta__grid {
+  display: grid; grid-template-columns: 1.02fr 0.98fr;
+  gap: clamp(36px, 5vw, 88px);
+  align-items: start;
+  max-width: var(--maxw);
+}
+.cta__t {
+  font-family: var(--f-display); font-weight: 400;
+  font-size: clamp(2.1rem, 6.6vw, 5.6rem); line-height: 0.96;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  margin-bottom: clamp(24px, 3.5vh, 40px);
+}
+.cta__t em { color: var(--ember); font-style: italic; }
+.cta__sub {
+  font-size: var(--t-sub); color: var(--text-dim);
+  max-width: 46ch; line-height: 1.6;
+}
+.chan { border-top: 1px solid var(--line); }
+.chan__r {
+  position: relative; display: grid;
+  grid-template-columns: 104px 1fr auto;
+  align-items: center; gap: 16px;
+  min-height: 78px; padding: 0 clamp(10px, 1.4vw, 20px);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  color: var(--text);
+}
+.chan__r::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--ember);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.42s var(--ease-out);
+  z-index: 0;
+}
+.chan__r:hover::before { transform: scaleX(1); }
+.chan__r > * { position: relative; z-index: 1; transition: color 0.32s var(--ease-out), transform 0.42s var(--ease-out); }
+.chan__r:hover > * { color: var(--void); }
+.chan__r i {
+  font-family: var(--f-mono); font-style: normal; font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-dim);
+}
+.chan__r b {
+  font-size: var(--t-sub); font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.chan__r s { text-decoration: none; font-size: 1.3rem; }
+.chan__r:hover s { transform: translateX(12px); }
+
+/* ========================= FORM ========================= */
+.form {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 3vw, 44px);
+  max-width: 900px;
+  margin-top: clamp(40px, 5vh, 68px);
+}
+.form__f--w, .form__act { grid-column: 1 / -1; }
+.form__f { display: flex; flex-direction: column; }
+.form__f label {
+  font-family: var(--f-mono); font-size: 0.8125rem; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.2em;
+  color: var(--text);
+  margin-bottom: 10px;
+  transition: color 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+}
+.form__f:focus-within label { color: var(--ember); transform: translateY(-2px); }
+.form__f input, .form__f textarea {
+  background: none; border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--text) 55%, transparent);
+  padding: 12px 0; font-size: 17px;
+  resize: none; overflow: hidden;
+  font-family: var(--f-body);
+  transition: border-color 0.3s var(--ease-out);
+}
+.form__f input:focus, .form__f textarea:focus {
+  outline: none; border-bottom-color: var(--ember);
+}
+/* Chrome and Safari paint autofilled fields with their own opaque background
+   and text colour. background-color cannot be overridden, but an inset shadow
+   large enough to cover the field can, and -webkit-text-fill-color wins over
+   their forced text colour. The long delay keeps it from flashing back. */
+.form__f input:-webkit-autofill,
+.form__f input:-webkit-autofill:hover,
+.form__f input:-webkit-autofill:focus,
+.form__f textarea:-webkit-autofill {
+  -webkit-text-fill-color: var(--text);
+  -webkit-box-shadow: 0 0 0 1000px var(--void) inset;
+          box-shadow: 0 0 0 1000px var(--void) inset;
+  caret-color: var(--text);
+  transition: background-color 10000s ease-in-out 0s;
+}
+.form__f.has-error input, .form__f.has-error textarea { border-bottom-color: #E5484D; }
+.form__e {
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: #E5484D; min-height: 1.4em; margin-top: 8px;
+}
+.form__act { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.form__status {
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.18em;
+  color: var(--text-dim);
+}
+.form__status.is-sent {
+  color: var(--ember);
+  border-left: 2px solid var(--ember);
+  padding-left: 14px;
+}
+.form.is-sent { display: block; text-align: left; }
+
+/* ========================= FOOTER ========================= */
+.ftr {
+  position: relative; z-index: 1;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  padding: 0 var(--gutter) clamp(26px, 3.4vh, 40px);
+  overflow: hidden;
+}
+/* .ftr__meta used to carry its own rule to separate it from the ticker and
+   link list above it. Both are gone, so that rule sat a few pixels under the
+   footer's own border and read as an empty band before the name. */
+.ftr__meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 32px;
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.18em;
+  color: var(--text-dim);
+  padding: clamp(24px, 3vh, 34px) 0 0;
+  /* the back-to-top button sits at the right of this row */
+  padding-right: 68px;
+}
+.ftr__meta span:last-child { font-variant-numeric: tabular-nums; color: var(--ember); }
+.top {
+  position: absolute; right: var(--gutter); bottom: clamp(20px, 2.6vh, 30px);
+  width: 44px; height: 44px;
+  border: 1px solid var(--line-strong);
+  display: grid; place-items: center;
+  transition: background 0.3s var(--ease-out), color 0.3s, border-color 0.3s;
+}
+.top:hover { background: var(--ember); color: var(--void); border-color: var(--ember); }

@@ -1,0 +1,214 @@
+/* ========================================================================
+   Everything in the projects section.
+
+   The two featured panels, the card grid beneath them, the discipline filter
+   and the SVG diagram panels.
+   ======================================================================== */
+
+/* ========================= 07 WORK ========================= */
+.work { padding-bottom: 0; }
+.prj {
+  position: relative;
+  min-height: 92vh;
+  display: flex; align-items: center;
+  padding: clamp(60px, 10vh, 140px) 0;
+  border-top: 1px solid var(--line);
+}
+.prj:first-of-type { border-top: 0; }
+.prj__n {
+  position: absolute; left: calc(var(--gutter) * -1); top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--f-display);
+  font-size: clamp(7rem, 20vw, 18rem); line-height: 0.8;
+  color: var(--text); opacity: 0.05;
+  pointer-events: none; z-index: 0;
+  will-change: transform;
+}
+.prj__body { position: relative; z-index: 1; max-width: 900px; }
+.prj__t {
+  font-family: var(--f-display); font-weight: 400;
+  font-size: var(--t-feature); line-height: 0.96;
+  letter-spacing: -0.03em; text-wrap: balance;
+}
+.prj__sub {
+  font-size: var(--t-sub); font-weight: 500;
+  color: var(--cool); margin-top: 12px;
+}
+.prj__thesis {
+  font-family: var(--f-display); font-style: italic;
+  font-size: clamp(1.2rem, 2.2vw, 1.85rem);
+  color: var(--ember); line-height: 1.35;
+  margin: clamp(20px, 3vh, 34px) 0;
+  max-width: 34ch;
+}
+.prj__d {
+  color: var(--text-dim); line-height: 1.75;
+  max-width: 64ch; text-wrap: pretty;
+}
+.prj__callout {
+  margin-top: 22px; padding: 16px 20px;
+  border-left: 2px solid var(--ember);
+  background: var(--ember-soft);
+  font-size: var(--t-body);
+  color: var(--text); max-width: 56ch;
+}
+.prj__m {
+  display: flex; flex-wrap: wrap; gap: clamp(24px, 4vw, 64px);
+  margin: clamp(28px, 4vh, 48px) 0;
+  padding: 22px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.prj__m div { display: flex; flex-direction: column; gap: 6px; }
+.prj__m span {
+  font-family: var(--f-mono); font-weight: 500;
+  font-size: var(--t-num-m);
+  font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
+  line-height: 1;
+}
+.prj__m i {
+  font-family: var(--f-mono); font-style: normal; font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.16em; color: var(--text-faint);
+}
+.prj__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: clamp(26px, 4vh, 40px); }
+.prj__tags li {
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--text-dim); padding: 7px 12px; border: 1px solid var(--line-strong);
+  transition: color 0.25s, border-color 0.25s;
+}
+.prj__tags li:hover { color: var(--text); border-color: var(--line-strong); }
+.prj__links { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ==========================================================================
+   PROJECT GRID (2-up)
+   ========================================================================== */
+.pgrid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 0 clamp(32px, 4vw, 72px);
+  max-width: var(--maxw);
+  border-top: 1px solid var(--line);
+  margin-top: clamp(40px, 6vh, 80px);
+}
+.pcard {
+  padding: clamp(32px, 4vh, 52px) 0;
+  border-bottom: 1px solid var(--line);
+  display: flex; flex-direction: column;
+  position: relative;
+}
+.pcard__n {
+  font-family: var(--f-mono); font-size: var(--t-label);
+  letter-spacing: 0.2em; color: var(--ember);
+  margin-bottom: 14px;
+}
+.pcard__t {
+  font-family: var(--f-display); font-weight: 400;
+  font-size: var(--t-title); line-height: 1.02;
+  letter-spacing: -0.025em; text-wrap: balance;
+  margin-bottom: 12px;
+}
+.pcard__thesis {
+  font-family: var(--f-display); font-style: italic;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  color: var(--ember); line-height: 1.35;
+  margin-bottom: 16px;
+}
+.pcard__d {
+  font-size: var(--t-body); color: var(--text-dim);
+  line-height: 1.72; text-wrap: pretty; flex: 1;
+  margin-bottom: 22px; max-width: 54ch;
+}
+.pcard__tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 22px; }
+.pcard__tags li {
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--text-dim); padding: 6px 10px;
+  border: 1px solid var(--line-strong);
+  transition: color 0.25s, border-color 0.25s;
+}
+.pcard:hover .pcard__tags li { border-color: var(--line-strong); }
+.pcard__links { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn--sm { padding: 11px 18px; min-height: 40px; }
+
+/* ==========================================================================
+   PROJECT FILTER
+   ========================================================================== */
+.pfilter {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: clamp(48px, 7vh, 88px);
+  max-width: var(--maxw);
+}
+.pfilter__b {
+  font-family: var(--f-mono); font-size: var(--t-label);
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--text-dim);
+  padding: 10px 16px; min-height: 40px;
+  border: 1px solid var(--line-strong);
+  transition: color 0.25s var(--ease-out), border-color 0.25s var(--ease-out),
+              background-color 0.25s var(--ease-out);
+}
+.pfilter__b:hover { color: var(--text); border-color: var(--text-dim); }
+.pfilter__b.is-on {
+  background: var(--ember); border-color: var(--ember); color: var(--void);
+}
+.pgrid { margin-top: clamp(24px, 3vh, 40px); }
+.pcard[hidden] { display: none; }
+
+/* ==========================================================================
+   PROJECT VISUALISATION PANEL
+   ========================================================================== */
+.prj { align-items: center; }
+.prj__viz {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; gap: clamp(20px, 3vh, 34px);
+}
+.viz {
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  padding: clamp(18px, 2vw, 26px);
+}
+.viz__head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 14px; margin-bottom: 20px; flex-wrap: wrap;
+}
+.viz__t {
+  font-family: var(--f-mono); font-size: var(--t-label); font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.18em; color: var(--text);
+}
+.viz__note {
+  font-family: var(--f-mono); font-size: var(--t-micro);
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--ember); white-space: nowrap;
+  border: 1px solid var(--ember); padding: 3px 6px;
+}
+.viz svg { display: block; width: 100%; height: auto; overflow: visible; }
+.viz text { font-family: var(--f-mono); fill: var(--text-dim); }
+.viz .ax { stroke: var(--line); stroke-width: 1; }
+.viz .ln { fill: none; stroke: var(--ember); stroke-width: 1.75; }
+.viz .ln.dim { stroke: var(--cool); stroke-width: 1.25; opacity: 0.75; }
+/* retrieval funnel */
+.viz .funbar { fill: color-mix(in srgb, var(--cool) 26%, transparent); stroke: var(--line-strong); }
+.viz .fun text { fill: var(--text); }
+.viz .fun text.sub { fill: var(--text-dim); }
+.viz .fun.hi .funbar { fill: var(--ember-soft); stroke: var(--ember); }
+.viz .fun.hi text { fill: var(--ember); }
+.viz .fun.hi text.sub { fill: color-mix(in srgb, var(--ember) 78%, transparent); }
+.viz .funarrow { stroke: var(--line-strong); stroke-width: 1; fill: none; }
+
+/* flow diagram */
+.flow__row { display: flex; align-items: stretch; gap: 8px; }
+.flow__n {
+  flex: 1; min-width: 0;
+  border: 1px solid var(--line); padding: 9px 10px;
+  font-family: var(--f-mono); font-size: var(--t-micro);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-dim); line-height: 1.5;
+  transition: border-color 0.3s, color 0.3s;
+}
+.flow__n b { display: block; color: var(--text); font-weight: 500; letter-spacing: 0.12em; }
+.flow__n.acc { border-color: var(--ember); }
+.flow__n.acc b { color: var(--ember); }
+.flow__c {
+  height: 16px; display: flex; justify-content: center; align-items: center;
+  color: var(--text-faint); font-size: 10px;
+}
+.flow__c::before { content: '↓'; }
