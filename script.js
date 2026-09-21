@@ -18,6 +18,25 @@
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
 
+  /* ---- analytics ----------------------------------------------------
+     One funnel for everything the page wants to report. Clarity is the
+     only destination: Cloudflare Web Analytics counts visits and has no
+     event API at all.
+
+     Every call is a no-op when Clarity is absent, which is the case
+     whenever content/site.js has no clarityId, so none of the call sites
+     below need to know whether tracking is switched on.
+
+       track('name')       a thing happened
+       tag('key','value')  a property of this whole session, filterable
+                           in the Clarity dashboard                      */
+  function track(name) {
+    try { if (window.clarity) window.clarity('event', name); } catch (e) {}
+  }
+  function tag(key, value) {
+    try { if (window.clarity) window.clarity('set', key, String(value)); } catch (e) {}
+  }
+
   /* ======================================================================
      01 — THEME
      ====================================================================== */
@@ -48,6 +67,8 @@
          no-flash script in src/templates/head.js */
       try { sessionStorage.setItem('stm-theme', next); } catch (e) {}
       sync();
+      track('theme_' + next);
+      tag('used_theme', next);
       window.dispatchEvent(new CustomEvent('stm:theme', { detail: next }));
     });
   }
@@ -96,6 +117,10 @@
        screen and the gate releases itself after AUTO_MS whether or not anyone
        clicks; a click just gets there sooner. */
     var AUTO_MS = 7000, idleOut = null, autoOut = null;
+    /* the gate is the most likely place to lose a visitor, so how they got
+       through it, and how long it took, are the two numbers worth having */
+    var openedAt = Date.now(), how = 'abandoned';
+    track('gate_shown');
 
     /* the film is still decoding behind the gate */
     var loadTimer = setInterval(function () {
@@ -105,6 +130,9 @@
     function enter() {
       if (entered) return;
       entered = true;
+      tag('entered_via', how);
+      tag('seconds_at_gate', Math.round((Date.now() - openedAt) / 1000));
+      track('gate_entered_' + how);
       clearInterval(loadTimer);
       clearTimeout(idleOut); clearTimeout(autoOut);
       if (pulseTl) { pulseTl.kill(); pulseTl = null; }
@@ -166,6 +194,9 @@
       chip.setAttribute('aria-hidden', 'true');
       chip.tabIndex = -1;
       if (hint) hint.setAttribute('aria-hidden', 'true');
+      how = 'solved';
+      track('gate_solved');
+      tag('seconds_to_solve', Math.round((Date.now() - openedAt) / 1000));
       pulse(true);
 
       var list = (window.STM_FACTS && window.STM_FACTS.length) ? window.STM_FACTS : null;
@@ -191,7 +222,10 @@
       var bar = $('#gateCount');
       if (bar) gsap.fromTo(bar, { width: '0%' },
         { width: '100%', duration: AUTO_MS / 1000, ease: 'none' });
-      autoOut = setTimeout(enter, AUTO_MS);
+      autoOut = setTimeout(function () {
+        if (how === 'solved') how = 'solved_then_waited';
+        enter();
+      }, AUTO_MS);
     }
 
     /* pointer drag — one handler covers mouse, pen and touch */
@@ -233,10 +267,14 @@
     /* keyboard and assistive tech get the same outcome without a drag */
     chip.addEventListener('click', function () { if (!dragging) solve(); });
 
-    if (skip) skip.addEventListener('click', function (e) { e.stopPropagation(); enter(); });
+    if (skip) skip.addEventListener('click', function (e) {
+      e.stopPropagation();
+      how = 'skipped';
+      enter();
+    });
 
     /* never trap anyone: if the step is still unplaced after 45s, open it */
-    idleOut = setTimeout(enter, 45000);
+    idleOut = setTimeout(function () { how = 'timed_out'; enter(); }, 45000);
   }
 
   /* ======================================================================
@@ -1192,11 +1230,12 @@
     f.addEventListener('submit', function (e) {
       e.preventDefault();
       var allOk = fields.map(function (fd) { return validate(fd, true); }).every(Boolean);
-      if (!allOk) { status.textContent = 'Check the fields above'; return; }
+      if (!allOk) { status.textContent = 'Check the fields above'; track('form_invalid'); return; }
 
       btn.disabled = true;
       status.textContent = 'Sending...';
       status.classList.remove('is-sent');
+      track('form_submitted');
 
       fetch(FORM_ENDPOINT, {
         method: 'POST',
@@ -1217,12 +1256,15 @@
         btn.disabled = false;
         status.classList.add('is-sent');
         status.textContent = 'Thank you. I will be in touch with you soon.';
+        track('form_delivered');
+        tag('sent_a_message', 'yes');
         if (!REDUCED) gsap.fromTo(status, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.5, ease: 'expo.out' });
         setTimeout(function () {
           status.classList.remove('is-sent');
           status.textContent = '';
         }, 9000);
       }).catch(function () {
+        track('form_failed');
         btn.disabled = false;
         status.classList.remove('is-sent');
         status.innerHTML = 'Something broke. Email me directly: <a href="mailto:suryamothuk23@gmail.com" style="color:var(--ember)">suryamothuk23@gmail.com</a>';
@@ -1233,7 +1275,11 @@
     var copyRow = $('.chan__r[data-copy]');
     if (copyRow && navigator.clipboard) {
       copyRow.addEventListener('click', function () {
-        navigator.clipboard.writeText(copyRow.dataset.copy).then(function () { toast('Copied'); });
+        /* a denied or unavailable clipboard rejects, and with nothing
+           attached that surfaces as an unhandled rejection in the console */
+        navigator.clipboard.writeText(copyRow.dataset.copy)
+          .then(function () { toast('Copied'); })
+          .catch(function () { track('copy_blocked'); });
       });
     }
   }
@@ -1300,6 +1346,115 @@
   /* ======================================================================
      BOOT
      ====================================================================== */
+  /* ======================================================================
+     ANALYTICS WIRING
+
+     Everything here is observation from the outside: delegated clicks and
+     a ScrollTrigger per section. The only events fired from inside other
+     parts are the ones this cannot see, namely the gate outcome, the theme
+     toggle and the form result.
+
+     Nothing sends anything unless content/site.js carries a clarityId.
+     ====================================================================== */
+  function analytics() {
+    /* --- who is here, as filterable session properties --- */
+    tag('theme_at_load', document.documentElement.getAttribute('data-theme') || 'dark');
+    tag('reduced_motion', REDUCED ? 'yes' : 'no');
+    tag('width_band', window.innerWidth < 720 ? 'phone'
+                    : window.innerWidth < 1025 ? 'tablet' : 'desktop');
+    tag('touch', ('ontouchstart' in window) ? 'yes' : 'no');
+    try { tag('referrer', document.referrer ? new URL(document.referrer).hostname : 'direct'); } catch (e) {}
+
+    /* --- how far down the page they got ---
+       On a one-page site this is the whole engagement story: there are no
+       other pages to visit, so the section reached IS the depth metric. */
+    var deepest = 0;
+    $$('main > section[id]').forEach(function (sec, i) {
+      ScrollTrigger.create({
+        trigger: sec, start: 'top 70%', once: true,
+        onEnter: function () {
+          track('reached_' + sec.id);
+          if (i > deepest) { deepest = i; tag('deepest_section', sec.id); }
+        }
+      });
+    });
+
+    /* --- one delegated listener for every click worth counting --- */
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a, button') : null;
+      if (!a) return;
+
+      /* where on the page the click happened, reported alongside the link
+         itself so the header LinkedIn icon and the contact row are not the
+         same number */
+      /* on a contact row the <i> is the heading (Email, LinkedIn, GitHub)
+         and the <b> is the value, so here the <i> is what we want */
+      if (a.classList.contains('chan__r')) {
+        var h = a.querySelector('i');
+        track('contact_row_' + slug(h ? h.textContent : 'row'));
+      }
+      else if (a.closest('.hdr__right'))   track('header_icon');
+
+      /* leaving the site: which destination, and which project sent them */
+      if (a.tagName === 'A' && a.hostname && a.hostname !== location.hostname) {
+        var where = /github\.com/.test(a.hostname) ? 'github'
+                  : /linkedin\.com/.test(a.hostname) ? 'linkedin'
+                  : 'demo';
+        track('outbound_' + where);
+        tag('clicked_outbound', 'yes');
+        var card = a.closest('.prj, .pcard');
+        var t = card && card.querySelector('.prj__t, .pcard__t');
+        if (t) track('outbound_from_' + slug(t.textContent));
+        return;
+      }
+      if (a.href && a.href.indexOf('mailto:') === 0) { track('clicked_email'); return; }
+
+      if (a.classList.contains('pfilter__b')) { track('filter_' + slug(label(a))); return; }
+      if (a.closest('.hero__act'))   { track('hero_cta_' + slug(label(a))); return; }
+      if (a.closest('.hdr__nav'))    { track('nav_' + slug(label(a))); return; }
+      if (a.closest('.menu nav'))    { track('menu_nav_' + slug(label(a))); return; }
+      if (a.id === 'burger')         { track('opened_menu'); return; }
+      if (a.id === 'top-btn')        { track('back_to_top'); return; }
+    }, true);
+
+    /* --- did they start typing, even if they never sent it --- */
+    var started = false;
+    var form = $('#form');
+    if (form) {
+      form.addEventListener('focusin', function () {
+        if (started) return;
+        started = true;
+        track('form_started');
+        tag('started_a_message', 'yes');
+      });
+    }
+
+    /* --- did they stay, or bounce --- */
+    var landed = Date.now();
+    [15, 60, 180].forEach(function (sec) {
+      setTimeout(function () { track('stayed_' + sec + 's'); }, sec * 1000);
+    });
+    window.addEventListener('pagehide', function () {
+      tag('seconds_on_page', Math.round((Date.now() - landed) / 1000));
+    });
+  }
+
+  /* the nav and menu links carry their number in an <i>, and the contact
+     rows carry their heading in one, so the visible label is everything
+     except that child */
+  function label(el) {
+    var out = '';
+    for (var n = el.firstChild; n; n = n.nextSibling) {
+      if (n.nodeType === 3) out += n.nodeValue;
+      else if (n.nodeType === 1 && n.tagName !== 'I' && n.tagName !== 'SVG') out += n.textContent;
+    }
+    return out.trim() || el.textContent;
+  }
+
+  function slug(s) {
+    return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '').slice(0, 40);
+  }
+
   function boot() {
     if (typeof gsap === 'undefined') { document.documentElement.classList.add('no-js'); return; }
     gsap.registerPlugin(ScrollTrigger);
@@ -1319,6 +1474,7 @@
       work();
       projectViz();
       projectFilter();
+      analytics();
       cursor();
       form();
       footer();

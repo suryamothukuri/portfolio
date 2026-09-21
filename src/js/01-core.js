@@ -14,6 +14,25 @@
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
 
+  /* ---- analytics ----------------------------------------------------
+     One funnel for everything the page wants to report. Clarity is the
+     only destination: Cloudflare Web Analytics counts visits and has no
+     event API at all.
+
+     Every call is a no-op when Clarity is absent, which is the case
+     whenever content/site.js has no clarityId, so none of the call sites
+     below need to know whether tracking is switched on.
+
+       track('name')       a thing happened
+       tag('key','value')  a property of this whole session, filterable
+                           in the Clarity dashboard                      */
+  function track(name) {
+    try { if (window.clarity) window.clarity('event', name); } catch (e) {}
+  }
+  function tag(key, value) {
+    try { if (window.clarity) window.clarity('set', key, String(value)); } catch (e) {}
+  }
+
   /* ======================================================================
      01 — THEME
      ====================================================================== */
@@ -44,6 +63,8 @@
          no-flash script in src/templates/head.js */
       try { sessionStorage.setItem('stm-theme', next); } catch (e) {}
       sync();
+      track('theme_' + next);
+      tag('used_theme', next);
       window.dispatchEvent(new CustomEvent('stm:theme', { detail: next }));
     });
   }

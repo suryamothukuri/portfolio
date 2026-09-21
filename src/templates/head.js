@@ -90,9 +90,38 @@ module.exports = function head(site) {
     '',
     '<script type="application/ld+json">',
     JSON.stringify(schema, null, 2),
-    '</script>'
-  ].join('\n');
+    '</script>',
+    analytics(site.analytics || {})
+  ].filter(function (l) { return l !== null; }).join('\n');
 };
+
+/* Both tags are written only when their id is filled in, so an empty
+   analytics block ships a page with no third-party tracking at all.
+
+   Clarity sits in the head rather than at the end of the body: the intro
+   gate is the first thing a visitor meets and the most likely place to lose
+   them, so the recording has to be running before it appears. */
+function analytics(a) {
+  var out = [];
+  if (a.clarityId) {
+    out.push('',
+      '<script>',
+      '/* Microsoft Clarity: heatmaps, session recordings, custom events */',
+      '(function(c,l,a,r,i,t,y){',
+      '  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};',
+      '  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;',
+      '  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);',
+      '})(window, document, "clarity", "script", ' + JSON.stringify(a.clarityId) + ');',
+      '</script>');
+  }
+  if (a.cloudflareToken) {
+    out.push('',
+      '<!-- Cloudflare Web Analytics: no cookies, deferred, counts only -->',
+      '<script defer src="https://static.cloudflareinsights.com/beacon.min.js" ' +
+      "data-cf-beacon='" + JSON.stringify({ token: a.cloudflareToken }) + "'></script>");
+  }
+  return out.length ? out.join('\n') : null;
+}
 
 function abs(base, path) {
   if (/^https?:\/\//.test(path)) return path;

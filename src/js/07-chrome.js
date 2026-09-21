@@ -140,11 +140,12 @@
     f.addEventListener('submit', function (e) {
       e.preventDefault();
       var allOk = fields.map(function (fd) { return validate(fd, true); }).every(Boolean);
-      if (!allOk) { status.textContent = 'Check the fields above'; return; }
+      if (!allOk) { status.textContent = 'Check the fields above'; track('form_invalid'); return; }
 
       btn.disabled = true;
       status.textContent = 'Sending...';
       status.classList.remove('is-sent');
+      track('form_submitted');
 
       fetch(FORM_ENDPOINT, {
         method: 'POST',
@@ -165,12 +166,15 @@
         btn.disabled = false;
         status.classList.add('is-sent');
         status.textContent = 'Thank you. I will be in touch with you soon.';
+        track('form_delivered');
+        tag('sent_a_message', 'yes');
         if (!REDUCED) gsap.fromTo(status, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.5, ease: 'expo.out' });
         setTimeout(function () {
           status.classList.remove('is-sent');
           status.textContent = '';
         }, 9000);
       }).catch(function () {
+        track('form_failed');
         btn.disabled = false;
         status.classList.remove('is-sent');
         status.innerHTML = 'Something broke. Email me directly: <a href="mailto:suryamothuk23@gmail.com" style="color:var(--ember)">suryamothuk23@gmail.com</a>';
@@ -181,7 +185,11 @@
     var copyRow = $('.chan__r[data-copy]');
     if (copyRow && navigator.clipboard) {
       copyRow.addEventListener('click', function () {
-        navigator.clipboard.writeText(copyRow.dataset.copy).then(function () { toast('Copied'); });
+        /* a denied or unavailable clipboard rejects, and with nothing
+           attached that surfaces as an unhandled rejection in the console */
+        navigator.clipboard.writeText(copyRow.dataset.copy)
+          .then(function () { toast('Copied'); })
+          .catch(function () { track('copy_blocked'); });
       });
     }
   }

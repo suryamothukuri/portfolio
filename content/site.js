@@ -24,6 +24,22 @@ module.exports = {
      treat as the canonical address, so keep it correct. */
   url: 'https://suryamothukuri.is-a.dev/',
 
+  /* ANALYTICS. Both are free and both are off until you paste an id in.
+     Leave a value empty and that script is never written into the page, so
+     an empty config ships a site with no trackers at all.
+
+     cloudflareToken  Cloudflare dashboard > Web Analytics > Add a site >
+                      copy the token out of the snippet it shows you.
+                      No cookies, no consent banner, trustworthy counts.
+     clarityId        clarity.microsoft.com > new project > Settings >
+                      Setup > the id in the install snippet.
+                      Heatmaps, session recordings and the custom events
+                      below. Uses cookies. */
+  analytics: {
+    cloudflareToken: '4eec7f47e02049a299b7e2fa86ad9b3b',
+    clarityId: 'ylyx847y9r'
+  },
+
   meta: {
     title:       'Surya Teja Mothukuri, AI Engineer & Data Scientist',
     description: 'Surya Teja Mothukuri builds AI systems that earn their place in production. Agentic GenAI, production ML, and the data engineering underneath. New York City.',

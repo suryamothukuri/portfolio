@@ -23,6 +23,10 @@
        screen and the gate releases itself after AUTO_MS whether or not anyone
        clicks; a click just gets there sooner. */
     var AUTO_MS = 7000, idleOut = null, autoOut = null;
+    /* the gate is the most likely place to lose a visitor, so how they got
+       through it, and how long it took, are the two numbers worth having */
+    var openedAt = Date.now(), how = 'abandoned';
+    track('gate_shown');
 
     /* the film is still decoding behind the gate */
     var loadTimer = setInterval(function () {
@@ -32,6 +36,9 @@
     function enter() {
       if (entered) return;
       entered = true;
+      tag('entered_via', how);
+      tag('seconds_at_gate', Math.round((Date.now() - openedAt) / 1000));
+      track('gate_entered_' + how);
       clearInterval(loadTimer);
       clearTimeout(idleOut); clearTimeout(autoOut);
       if (pulseTl) { pulseTl.kill(); pulseTl = null; }
@@ -93,6 +100,9 @@
       chip.setAttribute('aria-hidden', 'true');
       chip.tabIndex = -1;
       if (hint) hint.setAttribute('aria-hidden', 'true');
+      how = 'solved';
+      track('gate_solved');
+      tag('seconds_to_solve', Math.round((Date.now() - openedAt) / 1000));
       pulse(true);
 
       var list = (window.STM_FACTS && window.STM_FACTS.length) ? window.STM_FACTS : null;
@@ -118,7 +128,10 @@
       var bar = $('#gateCount');
       if (bar) gsap.fromTo(bar, { width: '0%' },
         { width: '100%', duration: AUTO_MS / 1000, ease: 'none' });
-      autoOut = setTimeout(enter, AUTO_MS);
+      autoOut = setTimeout(function () {
+        if (how === 'solved') how = 'solved_then_waited';
+        enter();
+      }, AUTO_MS);
     }
 
     /* pointer drag — one handler covers mouse, pen and touch */
@@ -160,8 +173,12 @@
     /* keyboard and assistive tech get the same outcome without a drag */
     chip.addEventListener('click', function () { if (!dragging) solve(); });
 
-    if (skip) skip.addEventListener('click', function (e) { e.stopPropagation(); enter(); });
+    if (skip) skip.addEventListener('click', function (e) {
+      e.stopPropagation();
+      how = 'skipped';
+      enter();
+    });
 
     /* never trap anyone: if the step is still unplaced after 45s, open it */
-    idleOut = setTimeout(enter, 45000);
+    idleOut = setTimeout(function () { how = 'timed_out'; enter(); }, 45000);
   }
