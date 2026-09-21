@@ -22,7 +22,7 @@ module.exports = {
   /* Where the site will actually live. Until it is hosted this is a claim
      rather than a fact, and it is what search engines and link previews
      treat as the canonical address, so keep it correct. */
-  url: 'https://suryamothukuri.com/',
+  url: 'https://suryamothukuri.is-a.dev/',
 
   meta: {
     title:       'Surya Teja Mothukuri, AI Engineer & Data Scientist',
