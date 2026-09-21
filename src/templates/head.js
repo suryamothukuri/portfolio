@@ -8,15 +8,25 @@ var e = u.e, a = u.a;
 module.exports = function head(site) {
   var m = site.meta;
 
-  /* This has to run before the first paint or the page flashes dark then
-     light. It is inline for that reason and must stay inline. */
+  /* This has to run before the first paint or the page flashes one theme and
+     then the other. It is inline for that reason and must stay inline.
+
+     Dark is the site, not a preference: the film, the ember accent and the
+     whole grade were built for it, so every visitor starts there whatever
+     their operating system is set to.
+
+     Light is deliberately NOT remembered between visits. sessionStorage, not
+     localStorage: it survives a reload in the same tab, so someone who
+     switches does not get thrown back on every page load, but it is gone
+     when the tab closes. Somebody who tries light once and returns a week
+     later sees the site as it is meant to look, not as they left it. */
   var noFlash =
     "(function(){\n" +
     "  var t = 'dark';\n" +
     "  try {\n" +
-    "    var s = localStorage.getItem('stm-theme');\n" +
+    "    var s = sessionStorage.getItem('stm-theme');\n" +
     "    if (s === 'light' || s === 'dark') t = s;\n" +
-    "    else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) t = 'light';\n" +
+    "    localStorage.removeItem('stm-theme');   /* clear the old persistent key */\n" +
     "  } catch(e){}\n" +
     "  document.documentElement.setAttribute('data-theme', t);\n" +
     "})();";
@@ -46,8 +56,11 @@ module.exports = function head(site) {
     '<title>' + e(m.title) + '</title>',
     '<meta name="description" content="' + a(m.description) + '">',
     '<link rel="canonical" href="' + a(site.url) + '">',
-    '<meta name="theme-color" content="' + a(m.themeColorDark) + '" media="(prefers-color-scheme: dark)">',
-    '<meta name="theme-color" content="' + a(m.themeColorLight) + '" media="(prefers-color-scheme: light)">',
+    /* No media query on this one. It tints the phone browser's address bar,
+       and keying it to the operating system would put a cream bar above a
+       black page for anyone whose phone is in light mode. It starts dark
+       like the page, and the toggle repaints it. */
+    '<meta name="theme-color" content="' + a(m.themeColorDark) + '">',
     '',
     '<meta property="og:type" content="website">',
     '<meta property="og:title" content="' + a(m.ogTitle) + '">',

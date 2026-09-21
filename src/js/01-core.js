@@ -22,18 +22,27 @@
     if (!btn) return;
     var root = document.documentElement;
 
+    /* the two --void values, kept here because the address-bar tint is the
+       one colour that lives outside the stylesheet */
+    var CHROME = { dark: '#07080B', light: '#DEDBD2' };
+
     function sync() {
       var dark = root.getAttribute('data-theme') !== 'light';
       btn.setAttribute('aria-pressed', String(!dark));
       btn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
       btn.setAttribute('title', dark ? 'Light mode' : 'Dark mode');
+      /* keep the phone browser's address bar on the same side as the page */
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', dark ? CHROME.dark : CHROME.light);
     }
     sync();
 
     btn.addEventListener('click', function () {
       var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
       root.setAttribute('data-theme', next);
-      try { localStorage.setItem('stm-theme', next); } catch (e) {}
+      /* sessionStorage so the choice lasts the visit and no longer: see the
+         no-flash script in src/templates/head.js */
+      try { sessionStorage.setItem('stm-theme', next); } catch (e) {}
       sync();
       window.dispatchEvent(new CustomEvent('stm:theme', { detail: next }));
     });

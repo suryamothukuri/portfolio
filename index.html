@@ -6,8 +6,7 @@
 <title>Surya Teja Mothukuri, AI Engineer &amp; Data Scientist</title>
 <meta name="description" content="Surya Teja Mothukuri builds AI systems that earn their place in production. Agentic GenAI, production ML, and the data engineering underneath. New York City.">
 <link rel="canonical" href="https://suryamothukuri.is-a.dev/">
-<meta name="theme-color" content="#07080B" media="(prefers-color-scheme: dark)">
-<meta name="theme-color" content="#EFEDE7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#07080B">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Surya Teja Mothukuri, AI Engineer &amp; Data Scientist">
@@ -29,9 +28,9 @@
 (function(){
   var t = 'dark';
   try {
-    var s = localStorage.getItem('stm-theme');
+    var s = sessionStorage.getItem('stm-theme');
     if (s === 'light' || s === 'dark') t = s;
-    else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) t = 'light';
+    localStorage.removeItem('stm-theme');   /* clear the old persistent key */
   } catch(e){}
   document.documentElement.setAttribute('data-theme', t);
 })();
